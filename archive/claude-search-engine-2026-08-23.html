@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>עוגן — חני בלוי</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Frank+Ruhl+Libre:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:'Heebo',sans-serif;direction:rtl}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none}
+body{background:radial-gradient(ellipse at 25% 25%,#f0ddd0 0%,#e2ccba 45%,#c8b8a0 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+
+/* Phone */
+.phone-shell{position:relative;width:360px;border-radius:52px;background:linear-gradient(145deg,#2c2c2e,#1a1a1c);padding:12px;box-shadow:0 0 0 1.5px #3c3c3e,0 50px 100px rgba(0,0,0,0.65),0 8px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.07)}
+.ph-btn{position:absolute;border-radius:2px;background:#363638}
+.v1{width:3.5px;height:28px;right:-2.5px;top:108px}.v2{width:3.5px;height:52px;right:-2.5px;top:148px}.v3{width:3.5px;height:52px;right:-2.5px;top:212px}.pw{width:3.5px;height:64px;left:-2.5px;top:166px}
+.phone-screen{background:#FAFAF7;border-radius:40px;overflow:hidden;position:relative;display:flex;flex-direction:column;height:716px}
+.di{width:128px;height:36px;background:#111;border-radius:20px;margin:10px auto 4px;display:flex;align-items:center;justify-content:center;gap:9px;flex-shrink:0}
+.di-cam{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#2a2a4a,#111);border:1.5px solid #252535}
+.di-mic{width:7px;height:7px;border-radius:50%;background:#1c1c1e}
+.di-dot{width:4px;height:4px;border-radius:50%;background:#1a3060}
+.status{display:flex;justify-content:space-between;align-items:center;padding:0 22px 8px;font-size:11px;font-weight:700;color:#111;flex-shrink:0}
+.st-r{display:flex;align-items:center;gap:4px;font-size:10px}
+.bat{width:22px;height:11px;border:1.5px solid #333;border-radius:2.5px;position:relative;display:inline-flex;align-items:center;padding:1.5px}
+.bat::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:2.5px;height:5px;background:#333;border-radius:0 1px 1px 0}
+.bat-fill{height:100%;background:#333;border-radius:1px;width:72%}
+.app-c{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
+.page{display:none;min-height:100%}.page.on{display:block;animation:pIn .14s ease}
+@keyframes pIn{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* Bottom Nav */
+.b-nav{background:rgba(250,250,247,.97);backdrop-filter:blur(20px);border-top:.5px solid rgba(0,0,0,.09);padding:5px 2px 2px;display:flex;align-items:center;justify-content:space-around;flex-shrink:0;z-index:100}
+.n-btn{display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;font-size:8.5px;color:#aaa;padding:3px 8px;border-radius:10px;transition:all .15s;border:none;background:none;font-family:'Heebo',sans-serif;min-width:50px}
+.n-btn.on{color:#7D1A2E}
+.n-btn:active{transform:scale(.93)}
+.n-ico{font-size:20px;line-height:1.1}
+.n-em-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.n-em{width:50px;height:50px;border-radius:50%;background:linear-gradient(145deg,#9e2236,#7D1A2E);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:22px;box-shadow:0 4px 16px rgba(125,26,46,.45);transition:all .15s;position:relative;bottom:9px}
+.n-em:active{transform:scale(.92) translateY(2px)}
+.n-em-lbl{font-size:8.5px;color:#7D1A2E;font-weight:700;position:relative;bottom:3px}
+.hi{height:4px;width:100px;background:#333;border-radius:2px;margin:0 auto 3px;opacity:.18;flex-shrink:0}
+
+/* HOME */
+.h-top{background:linear-gradient(158deg,#6a1428 0%,#8e1e30 50%,#7D1A2E 100%);padding:12px 16px 18px}
+.h-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.h-logo{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden}
+.h-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.h-name{font-size:15px;font-weight:800;color:#fff}
+.h-phone{font-size:10px;color:rgba(255,255,255,.6);margin-top:1px}
+.h-slogan{font-size:13px;font-weight:700;color:rgba(255,230,180,.95);text-align:center;letter-spacing:.5px;margin:0 0 8px;font-family:'Frank Ruhl Libre',serif}
+.h-illus{display:flex;justify-content:center;margin:0 0 4px}
+.h-tagline{font-size:10px;color:rgba(255,220,160,.8);text-align:center;letter-spacing:.8px;margin-bottom:8px;font-style:italic}
+.h-search{position:relative}
+.h-sinput{width:100%;padding:10px 38px 10px 14px;border-radius:24px;border:none;background:white;font-size:12px;font-family:'Heebo',sans-serif;color:#222;direction:rtl;outline:none;box-shadow:0 2px 18px rgba(0,0,0,.2)}
+.h-sinput::placeholder{color:#bbb}
+.h-sico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;color:#ccc}
+
+/* Contact strip */
+.e-strip{margin:10px 12px 0;background:white;border-radius:14px;border:.5px solid #eee;padding:9px 12px}
+.e-title{font-size:9px;font-weight:700;color:#7D1A2E;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.e-row{display:flex;gap:8px;justify-content:center}
+.e-item{background:#FEF0F2;border-radius:10px;padding:7px 14px;text-decoration:none;display:flex;align-items:center;gap:6px;border:.5px solid rgba(125,26,46,.1);transition:all .1s;cursor:pointer}
+.e-item:active{transform:scale(.95)}
+.e-ico{font-size:16px}
+.e-n{font-size:9px;color:#7D1A2E;font-weight:700}
+.e-wa{background:#E8F8F0;border-color:rgba(37,211,102,.25)}
+.e-wa .e-n{color:#1a7a3a}
+
+/* Tiles */
+.sec-lbl{font-size:9px;font-weight:700;color:#aaa;padding:13px 16px 7px;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
+.sec-lbl::after{content:'';flex:1;height:.5px;background:#e8e8e0}
+.tile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 11px 14px}
+.tile{border-radius:14px;padding:10px 5px 8px;text-align:center;cursor:pointer;border:none;font-family:'Heebo',sans-serif;transition:transform .1s,box-shadow .1s}
+.tile:active{transform:scale(.94)}
+.t-ico{font-size:23px;display:block;margin-bottom:4px}
+.t-lbl{font-size:8.5px;line-height:1.3;font-weight:600;display:block}
+.t-cnt{font-size:7.5px;opacity:.6;display:block;margin-top:2px}
+.c-red{background:#FEF0F2;color:#7D1A2E}.c-olive{background:#F0F0E0;color:#4a4a28}
+.c-gold{background:#FEF5E7;color:#7a5a10}.c-blue{background:#EDF3FA;color:#1a4a6a}
+.c-teal{background:#E6F5F0;color:#1a5a42}.c-purple{background:#F3EEF8;color:#5a1a7a}
+.c-rose{background:#FEF0F5;color:#7a1a5a}.c-slate{background:#EEF0F5;color:#2a3a5a}
+.c-warm{background:#FEF5F0;color:#7a3a1a}
+
+/* EMERGENCY */
+.em-hd{background:linear-gradient(148deg,#7D1A2E,#9e2236);padding:12px 16px 14px;position:sticky;top:0;z-index:50}
+.em-pulse-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.em-pulse{width:10px;height:10px;border-radius:50%;background:#ff4444;box-shadow:0 0 0 0 rgba(255,68,68,.6);animation:pulse 1.5s infinite;flex-shrink:0}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,68,68,.6)}70%{box-shadow:0 0 0 9px rgba(255,68,68,0)}100%{box-shadow:0 0 0 0 rgba(255,68,68,0)}}
+.em-title{font-size:16px;font-weight:900;color:white}
+.em-sub{font-size:10px;color:rgba(255,255,255,.62);margin-bottom:10px;margin-right:18px}
+.em-sbox{background:rgba(255,255,255,.14);border-radius:14px;padding:10px 14px;border:1px solid rgba(255,255,255,.22)}
+.em-input{width:100%;background:none;border:none;outline:none;color:white;font-family:'Heebo',sans-serif;font-size:13px;direction:rtl;caret-color:white}
+.em-input::placeholder{color:rgba(255,255,255,.5)}
+.r-area{padding:12px}
+.r-lbl{font-size:9px;font-weight:700;color:#888;margin-bottom:8px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.4px}
+.r-lbl::before{content:'';width:6px;height:6px;border-radius:50%;background:#7D1A2E;flex-shrink:0}
+
+/* Guide card */
+.gcard{background:white;border-radius:16px;border:.5px solid #eee;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.gcard.feat{border:1.5px solid #7D1A2E;box-shadow:0 4px 22px rgba(125,26,46,.12)}
+.gc-head{padding:9px 12px 8px;display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+.bg-red{background:linear-gradient(135deg,#7D1A2E,#9e2236)}.bg-olive{background:linear-gradient(135deg,#5a5a28,#6B6B3A)}.bg-gold{background:linear-gradient(135deg,#8a6020,#C9943A)}.bg-blue{background:linear-gradient(135deg,#1a4a6a,#2a6a8a)}.bg-teal{background:linear-gradient(135deg,#1a5a42,#2a7a62)}.bg-purple{background:linear-gradient(135deg,#5a1a7a,#8a2aaa)}.bg-rose{background:linear-gradient(135deg,#7a1a5a,#9e2a7a)}.bg-slate{background:linear-gradient(135deg,#2a3a5a,#3a5a8a)}.bg-warm{background:linear-gradient(135deg,#7a3a1a,#a05020)}
+.gc-title{font-size:12px;font-weight:700;color:white;flex:1;line-height:1.4}
+.gc-badge{background:rgba(255,255,255,.2);color:white;font-size:8px;padding:2px 7px;border-radius:8px;white-space:nowrap;flex-shrink:0;border:.5px solid rgba(255,255,255,.28)}
+.gc-thumb{width:100%;height:70px;object-fit:cover;display:block}
+.gc-ph{width:100%;height:56px;background:linear-gradient(135deg,#FAE8EB,#FDF4E3);display:flex;align-items:center;justify-content:center;font-size:22px}
+.qs{padding:9px 12px 8px;border-bottom:.5px solid #f0f0ea}
+.qs-lbl{font-size:8.5px;font-weight:800;color:#7D1A2E;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.qs-step{display:flex;align-items:flex-start;gap:7px;padding:3px 0;font-size:10px;color:#333;line-height:1.45}
+.qs-n{width:18px;height:18px;border-radius:50%;background:#7D1A2E;color:white;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.5px}
+.gc-meta{padding:6px 12px;display:flex;flex-wrap:wrap;gap:3px}
+.mtag{background:#f5f5f0;border-radius:6px;padding:2px 7px;font-size:8px;color:#666;border:.5px solid #eae8e0}
+.mtag-new{background:#FEF0F2;color:#7D1A2E;border-color:#f0c0c8}
+.gc-acts{padding:5px 12px 9px;display:flex;gap:4px}
+.cbt{flex:1;padding:7px 4px;border-radius:9px;font-size:9px;font-family:'Heebo',sans-serif;font-weight:700;cursor:pointer;border:none;transition:all .1s;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:3px}
+.cbt:active{transform:scale(.95)}
+.cbt-p{background:#7D1A2E;color:white}
+.cbt-s{background:#f0f0e8;color:#555;border:.5px solid #e0e0d8}
+.cbt-off{background:#f5f5f2;color:#ccc}
+.rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.rel-c{background:white;border-radius:12px;border:.5px solid #eee;padding:10px;cursor:pointer;transition:all .1s}
+.rel-c:active{transform:scale(.97)}
+.rel-cat{font-size:7.5px;color:#aaa;margin-bottom:3px}
+.rel-title{font-size:10px;font-weight:600;color:#222;line-height:1.4;margin-bottom:4px}
+.rel-open{font-size:8px;color:#7D1A2E;font-weight:700}
+.empty{text-align:center;padding:40px 20px}
+.empty-ico{font-size:36px;margin-bottom:10px}
+.empty-txt{font-size:12px;color:#bbb;line-height:1.7}
+
+/* TOPICS */
+.tp-hd{background:linear-gradient(148deg,#5a5a30,#6B6B3A);padding:12px 16px 12px;position:sticky;top:0;z-index:50}
+.tp-title{font-size:15px;font-weight:900;color:white;margin-bottom:2px}
+.tp-sub{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:8px}
+.tp-sb{background:rgba(255,255,255,.14);border-radius:12px;padding:8px 12px;border:1px solid rgba(255,255,255,.2);margin-bottom:8px}
+.tp-sinput{width:100%;background:none;border:none;outline:none;color:white;font-family:'Heebo',sans-serif;font-size:11px;direction:rtl}
+.tp-sinput::placeholder{color:rgba(255,255,255,.5)}
+.aud-chips{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px}
+.aud-c{background:rgba(255,255,255,.14);color:white;border-radius:20px;padding:4px 11px;font-size:9px;cursor:pointer;white-space:nowrap;border:1px solid rgba(255,255,255,.18);font-family:'Heebo',sans-serif;transition:all .1s}
+.aud-c.on{background:white;color:#5a5a30;font-weight:700}
+.tp-list{padding:8px 8px 16px}
+.acc{background:white;border-radius:14px;border:.5px solid #e8e8e0;overflow:hidden;margin-bottom:8px;border-right:3px solid transparent}
+.acc.cr-red{border-right-color:#7D1A2E}.acc.cr-olive{border-right-color:#6B6B3A}.acc.cr-gold{border-right-color:#C9943A}.acc.cr-blue{border-right-color:#2a6a8a}.acc.cr-teal{border-right-color:#2a7a62}.acc.cr-purple{border-right-color:#8a2aaa}.acc.cr-rose{border-right-color:#9e2a7a}.acc.cr-slate{border-right-color:#3a5a8a}.acc.cr-warm{border-right-color:#a05020}
+.acc-hd{padding:10px 12px 10px 10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border:none;background:none;width:100%;font-family:'Heebo',sans-serif;text-align:right}
+.acc-left{display:flex;align-items:center;gap:8px}
+.acc-ico{font-size:19px}.acc-title{font-size:13px;font-weight:700;color:#222}
+.acc-cnt{font-size:8px;color:#999;background:#f5f5f0;padding:2px 6px;border-radius:8px;font-weight:600}
+.acc-arrow{color:#ccc;font-size:11px;transition:transform .2s;flex-shrink:0}
+.acc.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 12px 12px}.acc.open .acc-body{display:block}
+.sub-t{font-size:10px;font-weight:700;color:#7D1A2E;padding:5px 0 6px;border-bottom:.5px solid #eee;margin-bottom:5px}
+.g-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:7px 0;border-bottom:.5px solid #f5f5f0}
+.g-row:last-child{border-bottom:none}
+.g-info{flex:1}
+.g-title{font-size:10px;color:#222;line-height:1.4}
+.g-aud{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
+.at{background:#f0f0ea;border-radius:4px;padding:1px 5px;font-size:7.5px;color:#777}
+.nbadge{background:#C9943A;color:white;font-size:7px;padding:1px 5px;border-radius:4px;font-weight:700}
+.open-btn{padding:5px 10px;border-radius:8px;font-size:8.5px;font-family:'Heebo',sans-serif;font-weight:600;cursor:pointer;border:1.5px solid #7D1A2E;background:white;color:#7D1A2E;white-space:nowrap;text-decoration:none;display:inline-block;transition:all .1s}
+.open-btn:active{background:#7D1A2E;color:white}
+.open-btn.nl{border-color:#ddd;color:#bbb;cursor:default}
+
+/* STUDIO */
+.st-hd{background:linear-gradient(148deg,#2a3a6a,#3a5a8a);padding:12px 16px 12px;position:sticky;top:0;z-index:50}
+.st-title{font-size:15px;font-weight:900;color:white;margin-bottom:2px}
+.st-sub{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:8px}
+.st-sb{background:rgba(255,255,255,.14);border-radius:12px;padding:8px 12px;border:1px solid rgba(255,255,255,.2);margin-bottom:8px}
+.st-sinput{width:100%;background:none;border:none;outline:none;color:white;font-family:'Heebo',sans-serif;font-size:11px;direction:rtl}
+.st-sinput::placeholder{color:rgba(255,255,255,.5)}
+.st-list{padding:8px 8px 16px}
+.st-acc{background:white;border-radius:14px;border:.5px solid #e8e8e0;overflow:hidden;margin-bottom:8px;border-right:3px solid #3a5a8a}
+.st-acc-hd{padding:10px 12px 10px 10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border:none;background:none;width:100%;font-family:'Heebo',sans-serif;text-align:right}
+.st-acc-left{display:flex;align-items:center;gap:8px}
+.st-acc.open .acc-arrow{transform:rotate(180deg)}
+.st-acc-body{display:none;padding:4px 12px 12px}.st-acc.open .st-acc-body{display:block}
+.st-card{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:.5px solid #f5f5f0}
+.st-card:last-child{border-bottom:none}
+.st-card-title{font-size:10px;color:#222;flex:1;line-height:1.4}
+
+/* SAVED */
+.sv-hd{background:linear-gradient(148deg,#1a5a42,#2a7a62);padding:12px 16px 14px}
+.sv-title{font-size:15px;font-weight:900;color:white;margin-bottom:2px}
+.sv-sub{font-size:10px;color:rgba(255,255,255,.62)}
+.sv-c{padding:12px}
+.sv-empty{text-align:center;padding:50px 20px}
+.sv-ei{font-size:38px;margin-bottom:12px}
+.sv-et{font-size:12px;color:#bbb;line-height:1.7}
+
+.hl{background:rgba(201,148,58,.3);border-radius:2px}
+.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(18,18,18,.85);color:white;font-size:11px;padding:8px 18px;border-radius:24px;white-space:nowrap;z-index:999;transition:all .2s;opacity:0;pointer-events:none;font-family:'Heebo',sans-serif;backdrop-filter:blur(8px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="phone-shell">
+  <div class="ph-btn v1"></div><div class="ph-btn v2"></div><div class="ph-btn v3"></div><div class="ph-btn pw"></div>
+  <div class="phone-screen">
+    <div class="di"><div class="di-cam"></div><div class="di-dot"></div><div class="di-mic"></div></div>
+    <div class="status"><span id="clk">9:41</span><div class="st-r"><span>●●●</span><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div></div>
+    <div class="app-c">
+
+      <!-- HOME -->
+      <div class="page on" id="pg-home">
+        <div class="h-top">
+          <div class="h-logo-row">
+            <div class="h-logo">📚</div>
+            <div><div class="h-name">חני בלוי <span style="font-size:10px;font-weight:400;opacity:.7;letter-spacing:1px">| עוגן</span></div><div class="h-phone">יועצת ומדריכה · 054-591-8770</div></div>
+          </div>
+          <div class="h-slogan">תחשוב טוב — יהיה טוב</div>
+          <div class="h-illus">
+            <svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 62 Q35 54 60 62 Q85 70 110 62 Q135 54 160 62 Q185 70 210 62 Q225 57 230 62" stroke="rgba(255,255,255,.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M10 70 Q35 62 60 70 Q85 78 110 70 Q135 62 160 70 Q185 78 210 70" stroke="rgba(255,255,255,.12)" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <path d="M72 20 Q68 32 66 44 Q64 56 68 62" stroke="rgba(255,220,100,.4)" stroke-width="1.2" fill="none" stroke-dasharray="3,2" stroke-linecap="round"/>
+              <path d="M168 20 Q172 32 174 44 Q176 56 172 62" stroke="rgba(255,220,100,.4)" stroke-width="1.2" fill="none" stroke-dasharray="3,2" stroke-linecap="round"/>
+              <rect x="66" y="14" width="108" height="7" rx="3.5" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+              <line x1="120" y1="20" x2="120" y2="58" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="120" cy="18" r="5" stroke="rgba(255,255,255,.9)" stroke-width="2.5" fill="none"/>
+              <line x1="104" y1="28" x2="136" y2="28" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M104 55 Q120 68 136 55" stroke="rgba(255,255,255,.9)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="104" cy="55" r="3.5" fill="rgba(201,148,58,.9)"/>
+              <circle cx="136" cy="55" r="3.5" fill="rgba(201,148,58,.9)"/>
+              <circle cx="48" cy="28" r="1.8" fill="rgba(255,220,100,.7)"/>
+              <circle cx="192" cy="22" r="1.5" fill="rgba(255,255,255,.55)"/>
+              <text x="120" y="10" text-anchor="middle" fill="rgba(255,255,255,.95)" font-size="13" font-family="Frank Ruhl Libre,serif" font-weight="700" letter-spacing="3">עוגן</text>
+            </svg>
+          </div>
+          <div class="h-tagline">כלים ביד · שלווה בלב</div>
+          <div class="h-search">
+            <input type="text" class="h-sinput" id="h-srch" placeholder="חפשי... אובדנות, אבל, חרבות ברזל"/>
+            <span class="h-sico">🔍</span>
+          </div>
+        </div>
+        <div class="e-strip">
+          <div class="e-title">✉️ יצירת קשר</div>
+          <div class="e-row">
+            <a href="tel:0545918770" class="e-item"><span class="e-ico">📞</span><span class="e-n">054-591-8770</span></a>
+            <a href="https://wa.me/972545918770" target="_blank" class="e-item e-wa"><span class="e-ico">💬</span><span class="e-n">וואטסאפ</span></a>
+            <a href="mailto:bloyarava1@gmail.com" class="e-item"><span class="e-ico">✉️</span><span class="e-n">מייל</span></a>
+          </div>
+        </div>
+        <div class="sec-lbl">⚡ גישה מהירה לתדריכים</div>
+        <div class="tile-grid" id="home-tiles"></div>
+      </div>
+
+      <!-- EMERGENCY -->
+      <div class="page" id="pg-emergency">
+        <div class="em-hd">
+          <div class="em-pulse-row"><div class="em-pulse"></div><div class="em-title">חיפוש חירום ⚡</div></div>
+          <div class="em-sub">כתבי מה קורה — אקפיץ צעדים מיידיים</div>
+          <div class="em-sbox"><input type="text" class="em-input" id="em-srch" placeholder="ילד שפגע בעצמו · מוות בכיתה · הורה חטוף..."/></div>
+        </div>
+        <div class="r-area" id="em-res">
+          <div class="empty"><div class="empty-ico">⚡</div><div class="empty-txt">כתבי מה קורה<br>ואני מקפיצה לך את הצעד הבא</div></div>
+        </div>
+      </div>
+
+      <!-- TOPICS -->
+      <div class="page" id="pg-topics">
+        <div class="tp-hd">
+          <div class="tp-title">📂 מאגר התדריכים המלא</div>
+          <div class="tp-sub">תדריכים · כניסה ישירה לכל קובץ</div>
+          <div class="tp-sb"><input type="text" class="tp-sinput" id="tp-srch" placeholder="חיפוש בתוך הנושאים..."/></div>
+          <div class="aud-chips" id="aud-chips"></div>
+        </div>
+        <div class="tp-list" id="tp-list"></div>
+      </div>
+
+      <!-- STUDIO -->
+      <div class="page" id="pg-studio">
+        <div class="st-hd">
+          <div class="st-title">🎨 הסטודיו</div>
+          <div class="st-sub">מצגות · סדנאות · כלים דיגיטליים</div>
+          <div class="st-sb"><input type="text" class="st-sinput" id="st-srch" placeholder="חפשי מצגת, סדנה, כלי..."/></div>
+        </div>
+        <div class="st-list" id="st-list"></div>
+      </div>
+
+      <!-- SAVED -->
+      <div class="page" id="pg-saved">
+        <div class="sv-hd"><div class="sv-title">⭐ שמורים שלי</div><div class="sv-sub">לחצי ☆ על כרטיס לשמירה</div></div>
+        <div class="sv-c" id="sv-list"></div>
+      </div>
+
+    </div><!-- /app-c -->
+
+    <!-- Bottom nav -->
+    <div class="b-nav">
+      <button class="n-btn" id="n-emergency" onclick="goTab('emergency')"><span class="n-ico">⚡</span><span>חירום</span></button>
+      <button class="n-btn" id="n-topics" onclick="goTab('topics')"><span class="n-ico">📂</span><span>תדריכים</span></button>
+      <div class="n-em-wrap">
+        <button class="n-em" id="n-home" onclick="goTab('home')">🏠</button>
+        <span class="n-em-lbl">בית</span>
+      </div>
+      <button class="n-btn" id="n-studio" onclick="goTab('studio')"><span class="n-ico">🎨</span><span>סטודיו</span></button>
+      <button class="n-btn" id="n-saved" onclick="goTab('saved')"><span class="n-ico">⭐</span><span>שמורים</span></button>
+    </div>
+    <div class="hi"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const PROTOCOLS = JSON.parse(`[{"topic": "אובדנות", "sub": "זיהוי וגילוי", "title": "צ'ק ליסט לטיפול יועצת באירוע אובדני", "link": "https://drive.google.com/file/d/1uXwcFC4jOc_UtD1eaNZfIjlIhpNqTcEX/view", "recent": 0, "steps": ["פתחי את הצ'ק ליסט", "עברי שלב אחר שלב", "תעדי כל פעולה", "אל תדלגי על שלבים גם בלחץ"], "keywords": ["צק ליסט", "רשימת תיוג", "מה לעשות יועצת", "התחלה", "אירוע אובדני"], "audience": ["יועצת"]}, {"topic": "אובדנות", "sub": "זיהוי וגילוי", "title": "תדריך על פגיעה ואובדנות ליועצי החינוך (חמ\\"ד)", "link": "https://drive.google.com/file/d/1QMTEpG_jwzNrfg5tmToF9stApgMsLZWK/view", "recent": 0, "steps": ["תדריך מקיף ארוך", "לעיון מוקדם בלי משבר", "בסיס תיאורטי + מעשי"], "keywords": ["תדריך חמד", "מנהיגי חינוך", "יועצי חמד", "פגיעה"], "audience": ["יועצת"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "פנקס כיס ליועצת – אובדנות", "link": "https://drive.google.com/file/d/1v-qVZORUDRG8H_zFOjpor10MhiuwxqG8/view", "recent": 0, "steps": ["אינדקס מהיר של מה לשאול", "מה לעשות צעד אחר צעד", "טלפונים חיוניים", "לשמירה בכיס/בטלפון"], "keywords": ["פנקס כיס", "שליפה מהירה", "דף כיס", "תקציר אובדנות", "פנקס יועצת"], "audience": ["יועצת", "תלמיד"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "תדריך שיחה ראשונה בעקבות אובדנות", "link": "https://drive.google.com/file/d/1vZMP8SKjH3hO0rYDzHnkhMEvw8tDe47B/view", "recent": 0, "steps": ["אל תשאיר לבד", "הקשבה לא חוקרת", "הסרת אמצעים", "תיעוד"], "keywords": ["שיחה ראשונה", "שיחה אישית", "תלמיד אובדני", "התערבות ראשונה", "מה אומרים בשיחה"], "audience": ["תלמיד", "יועצת"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "התערבות בעת משבר אובדני - מצגת", "link": "https://drive.google.com/file/d/1J-WTJNTyL0-chLRiG7Px6Nyv66RSjQhL/view", "recent": 0, "steps": ["התערבות בשעת משבר טווח מיידי וקצר", "אירוע התאבדות של תלמיד", "הליך מסודר"], "keywords": ["התערבות", "משבר אובדני", "מצגת", "טווח מיידי", "התאבדות תלמיד"], "audience": ["יועצת"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "שיחה ביזמות בעקבות אירוע אובדנות", "link": "https://drive.google.com/file/d/1_Kbw8Uy3F7RwMT6_BlR2tG43aZ_bNgqi/view", "recent": 0, "steps": ["יוזמת השיחה אצל היועצת", "בירור פוסט-אירוע", "הערכה מחודשת"], "keywords": ["שיחה ביזמות", "יזמות שיחה", "מעקב אחר אירוע", "שיחה יזומה", "בירור"], "audience": ["יועצת"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "מסרים בוני חוסן בעקבות אובדנות", "link": "https://drive.google.com/file/d/1IhRkzHetKLGDc1sVM8WyAlaqA2Zg-BaD/view", "recent": 0, "steps": ["מסרים שמחזקים את התלמיד", "יציאה מחושך לאור", "תקווה"], "keywords": ["מסרים בוני חוסן", "חוסן נפשי", "בניית חוסן", "מסרים אחרי אובדנות"], "audience": ["יועצת", "תלמיד"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "התמודדות עם אמירות אובדניות בלי תכנון", "link": "", "recent": 0, "steps": ["לא לבטל ולא להגיב בפאניקה", "שיחה מעמיקה - זעקה? בקשת תשומת לב? סכנה אמיתית?", "יידוע הורים גם בלי תכנון", "מעקב הדוק שבועיים הראשונים"], "keywords": ["אמירה אובדנית", "אני רוצה למות", "איום בהתאבדות", "אמירות מילוליות", "בלי תכנון", "דיבור על מוות"], "audience": ["תלמיד"]}, {"topic": "אובדנות", "sub": "התערבות מיידית עם התלמיד", "title": "פגיעה עצמית בלי כוונה אובדנית (NSSI)", "link": "", "recent": 0, "steps": ["הבחנה ברורה מאובדנות", "בירור הפונקציה הרגשית", "חלופות להתמודדות", "הפניה לטיפול"], "keywords": ["פגיעה עצמית", "NSSI", "חתכים", "שריטות", "פגיעה גופנית", "בלי כוונה אובדנית"], "audience": ["תלמיד"]}, {"topic": "אובדנות", "sub": "אובדנות מוגמרת - שיחה בכיתה", "title": "שיחה בכיתות בעקבות אירוע אובדנות מוגמרת", "link": "https://drive.google.com/file/d/1_Kbw8Uy3F7RwMT6_BlR2tG43aZ_bNgqi/view", "recent": 0, "steps": ["התייעצות עם שפ\\"י לפני", "הימנעות מתיאור אופן הפגיעה (Werther effect)", "דגש על מקורות עזרה", "מעקב אחרי תלמידים פגיעים"], "keywords": ["אובדנות מוגמרת", "התאבדות מוגמרת", "תלמיד התאבד", "שיחה בכיתה אחרי אובדנות", "אחרי התאבדות"], "audience": ["כיתה"]}, {"topic": "אובדנות", "sub": "אובדנות מוגמרת - שיחה בכיתה", "title": "מהלך שיחה ראשונית בכיתות לאחר אירוע אובדני", "link": "https://drive.google.com/file/d/1panY_eQdCfn8EANSsPO3-VQyQvW3l55f/view", "recent": 0, "steps": ["פתיחה רכה", "מתן מקום לרגש", "הימנעות מפרטים", "סיום מחזק"], "keywords": ["מהלך שיחה", "שיחה ראשונית בכיתה", "אחרי אירוע אובדני", "חידוד למחנכים"], "audience": ["כיתה", "מחנך"]}, {"topic": "אובדנות", "sub": "מעגל המשפחה", "title": "תדריך להורה לילד אובדני - הוראות לבית", "link": "https://drive.google.com/file/d/1oPjMtpkhDoTdSkJUT-c4bAN2GGCyrUSJ/view", "recent": 0, "steps": ["הסרת אמצעים מהבית", "נוכחות מבוגר רציפה", "סדר יום מוסדר", "סימני אזהרה לזיהוי בבית"], "keywords": ["תדריך להורים", "ילד אובדני בבית", "הוראות להורים", "מה לעשות בבית", "מעקב בבית", "הורה לילד אובדני"], "audience": ["הורה"]}, {"topic": "אובדנות", "sub": "מעגל המשפחה", "title": "מכתב להורים אחרי מקרה אובדנות או חירום", "link": "https://drive.google.com/file/d/1mXdbSQDEpJi30KtdiLKhkgCrgIkk3eHDKmLyT4-YE3o/view", "recent": 0, "steps": ["תבנית מוכנה", "התאמה לפרטי המקרה", "תיאום עם הנהלה לפני שליחה"], "keywords": ["מכתב להורים", "תבנית מכתב", "אחרי אובדנות", "יידוע הורים", "הודעה כתובה"], "audience": ["הורה"]}, {"topic": "אבל ואובדן", "sub": "שיחה ראשונה עם התלמיד שאיבד", "title": "תדריך לאיש חינוך המלווה תלמיד שחווה אובדן", "link": "https://drive.google.com/file/d/1CHxc77vkthWRj2H4MlD6Ys2HP5B_ks0a/view", "recent": 1, "steps": ["להגיע עם הזמן (לא בריצה)", "לא לפחד מהשתיקה", "לתת מקום לרגש", "מעקב לטווח ארוך"], "keywords": ["אובדן", "תלמיד שחווה אובדן", "איש חינוך מלווה", "מחנך מלווה", "ליווי אבל"], "audience": ["תלמיד", "מחנך"]}, {"topic": "אבל ואובדן", "sub": "שיחה ראשונה עם התלמיד שאיבד", "title": "שיחה ראשונה אחרי אירוע (לתלמיד)", "link": "https://drive.google.com/file/d/1MHqA2oDT_TxH0vnCU_GLcWh5-Rsqhk3f/view", "recent": 0, "steps": ["פתיחה רגישה", "הקשבה אקטיבית", "לא לתקן"], "keywords": ["שיחה ראשונה", "אחרי אירוע", "תלמיד אחרי אירוע", "מפגש ראשון"], "audience": ["תלמיד"]}, {"topic": "אבל ואובדן", "sub": "שיחה ראשונה עם התלמיד שאיבד", "title": "מסירת בשורה מרה לתלמיד", "link": "https://drive.google.com/file/d/1Jmk2MoKzvOJri7gVp9-UXDu0QztzA18Q/view", "recent": 0, "steps": ["מסגרת רגועה", "נוכחות של מבוגר תומך", "אמירה ברורה אך עדינה", "הקשבה אחרי"], "keywords": ["בשורה מרה", "מסירת בשורה", "איך אומרים לתלמיד", "הודעה על מוות"], "audience": ["תלמיד"]}, {"topic": "אבל ואובדן", "sub": "שיחה ראשונה עם התלמיד שאיבד", "title": "מסירת בשורה מרה לתלמיד בגיל הרך", "link": "https://drive.google.com/file/d/14IToDAUXz72_J3lsMcBhNEqJV4MpTCgu/view", "recent": 0, "steps": ["שפה פשוטה ומדויקת", "הימנעות מדימויים מטעים (\\"נרדם\\")", "מתן מקום לשאלות", "חזרה על המידע"], "keywords": ["בשורה מרה גיל רך", "הודעה על מוות לילד קטן", "גן ילדים", "יסודי נמוך"], "audience": ["תלמיד"]}, {"topic": "אבל ואובדן", "sub": "שיחה ראשונה עם התלמיד שאיבד", "title": "איך הורה יכול לתמוך בילדו שחווה אובדן או משבר", "link": "https://drive.google.com/file/d/172TtLsh5j4iJ2-NPPGlbfQjqWqkDs79v/view", "recent": 1, "steps": ["נוכחות יציבה", "הקשבה לקצב הילד", "שיתוף ברגש", "לא להסתיר"], "keywords": ["הורה תומך", "איך תומכים בילד", "הורה לילד אבל", "הורה אחרי אובדן"], "audience": ["הורה"]}, {"topic": "אבל ואובדן", "sub": "שיחה בכיתה", "title": "שיחה ראשונה בכיתה בעקבות אסון", "link": "https://drive.google.com/file/d/1bBRTJqmL31D8BlvMzwES4Z-dO8g-aiuU/view", "recent": 0, "steps": ["פתיחה רכה", "מתן מקום לרגש בלי לחייב לדבר", "הכנת הצוות", "מעקב לאורך היום"], "keywords": ["שיחה בכיתה", "אחרי אסון", "שיחה כיתתית", "יום אחרי", "מה אומרים בכיתה"], "audience": ["כיתה"]}, {"topic": "אבל ואובדן", "sub": "שיחה בכיתה", "title": "ליווי, תמיכה ושיח כיתתי בעקבות בשורה מרה", "link": "https://drive.google.com/file/d/1_GEachi3e4AGvotbIHcMEFLqEDg3f-ze/view", "recent": 1, "steps": ["ליווי לאורך זמן", "תמיכה רב-שלבית", "שילוב המורים"], "keywords": ["ליווי כיתתי", "שיח כיתתי", "בשורה מרה כיתתית", "תמיכה בכיתה"], "audience": ["כיתה"]}, {"topic": "אבל ואובדן", "sub": "שיחה בכיתה", "title": "נקודות לשיח עם תלמידים צעירים בעקבות מוות", "link": "https://drive.google.com/file/d/19Z4wyamSmFB2MoriSGJ6XmuTU_3xHFiiMPSYW-RKIfo/view", "recent": 0, "steps": ["שפה ישירה", "לא להפחיד", "מענה לשאלות חוזרות"], "keywords": ["תלמידים צעירים", "יסודי", "נקודות לשיח", "אבל ילדים צעירים"], "audience": ["כיתה"]}, {"topic": "אבל ואובדן", "sub": "שיחה בכיתה", "title": "מהלך שיחה ראשונה בכיתות - מקוצר תחת לחץ", "link": "https://drive.google.com/file/d/16GAcMH9V6cDhgQLh3Ru7wVMcQS2ZHGt2/view", "recent": 0, "steps": ["גרסה דחוסה לכשאין זמן", "עקרונות הליבה בלבד", "התחלה מהלך סיום"], "keywords": ["מקוצר", "תחת לחץ", "גרסה מהירה", "שיחה דחופה"], "audience": ["כיתה"]}, {"topic": "אבל ואובדן", "sub": "שיחה בכיתה", "title": "מה אומרים כשאין מילים", "link": "https://drive.google.com/file/d/11eKRnst8YAeA_4tnfZFMVoEvTU-8CDbV/view", "recent": 1, "steps": ["נוכחות שותקת", "תיווך לרגש", "הקשבה ללא צורך לתקן"], "keywords": ["אין מילים", "כשאי אפשר לומר", "שיח אילם", "כשאין מה לומר"], "audience": ["כיתה"]}, {"topic": "אבל ואובדן", "sub": "תיווך הלוויה והשבעה", "title": "איך מתווכים לתלמידים את טקס ההלוויה ומנהג ניחום אבלים", "link": "https://drive.google.com/file/d/117A8zvI-z9twlu1srxaAp_auNs19GVcq/view", "recent": 0, "steps": ["הסבר מקדים על מה שיקרה", "הכנה לרגשות", "ליווי במידת הצורך", "שיחת סיכום אחרי"], "keywords": ["הלוויה", "תיווך הלוויה", "ניחום אבלים", "שבעה", "טקס לוויה", "הסבר לתלמידים"], "audience": ["תלמיד", "כיתה"]}, {"topic": "אבל ואובדן", "sub": "תיווך הלוויה והשבעה", "title": "תיווך לתלמידים של טקס הלוויה וניחום אבלים", "link": "https://drive.google.com/file/d/1IVL1eHsC8yT1prOUF4vgEVJ0IX2H3Xl_/view", "recent": 1, "steps": ["הסבר על השלבים", "מה לעשות ולא לעשות", "איך להגיב"], "keywords": ["תיווך טקס", "הלוויה תלמידים", "ניחום אבלים תלמידים"], "audience": ["תלמיד"]}, {"topic": "אבל ואובדן", "sub": "תיווך הלוויה והשבעה", "title": "תדריך לוויה ושבעה (תדריך מספר 7)", "link": "https://drive.google.com/file/d/1X3PlxqpRjo37D2lYvMXCWjH4sE41U1yk/view", "recent": 0, "steps": ["ההכנה ללוויה", "מהלך השבעה", "אחרי השבעה"], "keywords": ["תדריך לוויה", "שבעה", "אבלות", "מנהגי אבלות"], "audience": ["כל"]}, {"topic": "אבל ואובדן", "sub": "כניסה לכיתה אחרי אירוע", "title": "תדריך כניסה לכיתה לאחר אירוע מוות", "link": "https://drive.google.com/file/d/1b7Gl62lJ4sGjjDgjtohgD6yZvv_TZFLY/view", "recent": 0, "steps": ["הכנה רגשית של המורה", "אופן כניסה", "משפטי פתיחה", "מתן זמן"], "keywords": ["כניסה לכיתה", "אחרי מוות", "יום ראשון אחרי", "כניסה לכיתה אחרי אירוע"], "audience": ["צוות"]}, {"topic": "אבל ואובדן", "sub": "כניסה לכיתה אחרי אירוע", "title": "תדריך כניסה לכיתה (כללי)", "link": "https://drive.google.com/file/d/16CNUJHdvIjGafUe0isIoT2e2HeCOJ78s/view", "recent": 0, "steps": ["הכנת המורה", "אופן הכניסה", "משפטי פתיחה"], "keywords": ["כניסה לכיתה", "מורה נכנס לכיתה", "יום אחרי אירוע"], "audience": ["צוות"]}, {"topic": "אבל ואובדן", "sub": "מסרים בוני חוסן", "title": "מסרים בוני חוסן (כללי)", "link": "https://drive.google.com/file/d/1CMQk6H_A3gZz-0IJ1g8sejQv2yvMs0vN/view", "recent": 1, "steps": ["מסרים מרכזיים שמחזקים", "התמודדות", "תקווה"], "keywords": ["מסרים בוני חוסן", "חוסן", "בניית חוסן נפשי"], "audience": ["כל"]}, {"topic": "אבל ואובדן", "sub": "מסרים בוני חוסן", "title": "מסרים לליווי תלמיד שחווה משבר", "link": "https://drive.google.com/file/d/16q03zGpqzFywDJIqd3j-BMVYTYV2Ozse/view", "recent": 1, "steps": ["מסרים יומיומיים", "איך להזכיר חוסן", "דברים שלא לומר"], "keywords": ["ליווי תלמיד במשבר", "מסרים לליווי", "תלמיד חווה משבר"], "audience": ["כל"]}, {"topic": "מצוקה נפשית", "sub": "ליווי מתמשך", "title": "ליווי תלמיד שחווה משבר מערכתי ואישי", "link": "https://drive.google.com/file/d/1IKNyRf6GPx4jCH4KNhWEqNfcwi6KfAzG/view", "recent": 1, "steps": ["מעקב שבועי", "תיאום עם הגורם הטיפולי", "תיאום עם המחנך", "הערכה תקופתית"], "keywords": ["ליווי תלמיד", "משבר מערכתי", "משבר אישי", "תמיכה רגשית"], "audience": ["יועצת"]}, {"topic": "מצוקה נפשית", "sub": "שיחה על נושאים מורכבים", "title": "שיחה על נושאים מורכבים", "link": "https://drive.google.com/file/d/1uF9CdG9m0CPpLGbA6eLbf1SRGPnHfZRt/view", "recent": 1, "steps": ["בחירת זמן ומקום", "שפה מותאמת", "מתן מקום לרגש"], "keywords": ["שיחה מורכבת", "נושאים מורכבים", "שיחה רגישה", "איך מדברים על קשה"], "audience": ["יועצת", "תלמיד"]}, {"topic": "מצוקה נפשית", "sub": "שיח תומך", "title": "שיח תומך", "link": "https://drive.google.com/file/d/189BxHb2gGZcgFupcpu3Ebl4B212MBYPB/view", "recent": 1, "steps": ["עקרונות תקשורת תומכת", "הקשבה ללא שיפוט", "ולידציה"], "keywords": ["שיח תומך", "תמיכה רגשית", "הקשבה אקטיבית"], "audience": ["יועצת"]}, {"topic": "מצוקה נפשית", "sub": "ליווי ארוך טווח", "title": "מטראומה לחוסן - מצגת ליווי", "link": "https://drive.google.com/file/d/10mD9AdenxN7R3xb482Yz9o0nZRqJlE3FyqxHjrvqc0o/view", "recent": 0, "steps": ["שלבי ליווי", "מטראומה דרך תקווה לחוסן", "מודל ארוך טווח"], "keywords": ["מטראומה לחוסן", "ליווי ארוך טווח", "בניית חוסן", "PTSD"], "audience": ["יועצת"]}, {"topic": "מחלה ובריאות", "sub": "תלמיד חולה", "title": "ילד חולה - תדריך", "link": "https://drive.google.com/file/d/1SRIwRJkV_NVatDAWSvpatQclQwfRV1pk/view", "recent": 0, "steps": ["בירור עם המשפחה", "תיאום עם הצוות הרפואי", "שילוב למידה מהבית", "הכנת הכיתה"], "keywords": ["ילד חולה", "תלמיד חולה", "מחלה כרונית", "סרטן ילדים", "מחלה ממושכת"], "audience": ["תלמיד", "כיתה"]}, {"topic": "מחלה ובריאות", "sub": "הורה חולה", "title": "תדריך לתמיכה בילד שהורה שלו חולה", "link": "https://drive.google.com/file/d/1fvgq_IprzROANof0qmBGu_e-jEzi_WLN/view", "recent": 0, "steps": ["ליווי קבוע", "מתן מקום לחרדה", "תיאום עם המשפחה", "אבל מקדים אם רלוונטי"], "keywords": ["הורה חולה", "אבא חולה", "אמא חולה", "תמיכה בילד", "הורה במחלה"], "audience": ["תלמיד"]}, {"topic": "מחלה ובריאות", "sub": "הורה/אח פצוע (מבצע)", "title": "ליווי תלמיד שאחד מהוריו או מאחיו חולה/פצוע", "link": "https://drive.google.com/file/d/1KMyY8IH2P7rl3jYPk1RFB-mxPgQSXApp/view", "recent": 0, "steps": ["ליווי לאורך תהליך", "תיאום עם המשפחה", "מענה לחרדות הילד"], "keywords": ["הורה פצוע", "אח פצוע", "משפחה פצועה", "אחד מההורים פצוע", "תהליך החלמה"], "audience": ["תלמיד"]}, {"topic": "מחלה ובריאות", "sub": "אובדן קרוב משפחה", "title": "ליווי תלמיד שאיבד קרוב משפחה מדרגה ראשונה", "link": "https://drive.google.com/file/d/11sGHUnXUN-s81pOEMFjg1-b_5ARrR4oN/view", "recent": 0, "steps": ["ליווי אישי וקבוע", "תיאום עם המשפחה", "הכנת הכיתה", "ציון מועדים"], "keywords": ["אובדן קרוב משפחה", "דרגה ראשונה", "מות הורה", "מות אח", "מות אחות"], "audience": ["תלמיד"]}, {"topic": "אירוע ביטחוני", "sub": "חרבות ברזל", "title": "חרבות ברזל - אגרת ליועצים", "link": "https://drive.google.com/file/d/1KGPljGTlR_gLXYGAH5dXZiUW4-_1SJ6t/view", "recent": 1, "steps": ["אגרת מסכמת ליועצים", "הנחיות והכוונה", "משאבים"], "keywords": ["חרבות ברזל", "אגרת ליועצים", "מלחמה", "יועצי חינוך", "7/10"], "audience": ["יועצת"]}, {"topic": "אירוע ביטחוני", "sub": "חרבות ברזל", "title": "חרבות ברזל - צוות", "link": "https://drive.google.com/file/d/15KpVCIhvmE1irxdaeAEFX4h1p-_CAHXI/view", "recent": 1, "steps": ["הנחיות צוותיות", "תפקודי הצוות", "הדדיות"], "keywords": ["חרבות ברזל", "צוות", "הנחיות לצוות", "מורים בזמן מלחמה"], "audience": ["צוות"]}, {"topic": "אירוע ביטחוני", "sub": "חרבות ברזל", "title": "חרבות ברזל - גלויה מרכזת", "link": "https://drive.google.com/file/d/1upQ-PAc3TsfB7A5VxOWstaplMA54eamc/view", "recent": 1, "steps": ["דף מרכזי שמחזק", "אינדקס מהיר"], "keywords": ["חרבות ברזל גלויה", "גלויה מרכזת", "דף מרכז", "אינדקס מלחמה"], "audience": ["יועצת"]}, {"topic": "אירוע ביטחוני", "sub": "עם כלביא - מבצע צבאי", "title": "עם כלביא - שיח עם תלמידים שנחשפו", "link": "https://drive.google.com/file/d/1_pl3LUVWX-Q7xInJ_d_RFecxfNUyUzJx/view", "recent": 0, "steps": ["התאמה למבצע ספציפי", "שיח רגיש לתלמידים שנחשפו", "תמיכה ממוקדת"], "keywords": ["עם כלביא", "כלביא", "שיח כלביא", "תלמידים שנחשפו", "מבצע צבאי"], "audience": ["צוות", "תלמיד"]}, {"topic": "אירוע ביטחוני", "sub": "עם כלביא - מבצע צבאי", "title": "עם כלביא - שיח עם ילדי גן שנחשפו", "link": "https://drive.google.com/file/d/1_q7TVJpp4Mnc5eb0KQ-VNTFrpybqB6-g/view", "recent": 0, "steps": ["התאמה לילדי גן", "שפה רכה", "הורי הגן"], "keywords": ["עם כלביא גן", "ילדי גן כלביא", "גן ילדים מבצע"], "audience": ["גן", "הורה"]}, {"topic": "אירוע ביטחוני", "sub": "עם כלביא - מבצע צבאי", "title": "ליווי משפחות ופעוטות עם כלביא", "link": "https://drive.google.com/file/d/1kf9O9pS5rqPU1-BJpjJ7Bz2EHdI_D4L-/view", "recent": 0, "steps": ["ליווי הורים של פעוטות", "תקשורת עם המשפחה"], "keywords": ["ליווי משפחות", "פעוטות כלביא", "הורים פעוטות מבצע"], "audience": ["הורה", "גן"]}, {"topic": "אירוע ביטחוני", "sub": "עם כלביא - מבצע צבאי", "title": "צוותים ותלמידים עם כלביא", "link": "https://drive.google.com/file/d/1bm8jmZvuVKk3F2A0c30dMoiJ7GNwRod1/view", "recent": 0, "steps": ["הנחיות לצוות במבצע", "עבודה עם תלמידים"], "keywords": ["צוות וכלביא", "צוות תלמידים מבצע", "מבצע צבאי בית ספר"], "audience": ["צוות", "תלמיד"]}, {"topic": "אירוע ביטחוני", "sub": "עם כלביא - מבצע צבאי", "title": "רצף פעולות - אירוע חירום", "link": "https://drive.google.com/file/d/1BHw-Z9lIVOhlG3s-7cxr03uAA6tjWbvOZmY2CzMysZc/view", "recent": 0, "steps": ["רצף ברור צעד-צעד", "סדר עדיפויות", "לא לדלג"], "keywords": ["רצף פעולות", "אירוע חירום", "סדר פעולות", "מה לעשות בחירום"], "audience": ["יועצת"]}, {"topic": "אירוע ביטחוני", "sub": "נעדרים וחטופים", "title": "ליווי תלמידים ומשפחות שיקיריהן נעדרים", "link": "https://drive.google.com/file/d/1_HruZg6vawefNrDyWgdu0ccgpNiR33it/view", "recent": 1, "steps": ["ליווי לאורך זמן ארוך", "הימנעות מהבטחות", "תמיכה ברעננות החיים", "תקשורת עם המשפחה"], "keywords": ["נעדרים", "חטופים", "שבויים", "משפחה של נעדר", "משפחת חטוף"], "audience": ["תלמיד", "הורה"]}, {"topic": "אירוע ביטחוני", "sub": "נעדרים וחטופים", "title": "ליווי תלמידים שההורה נעדר/חטוף", "link": "https://drive.google.com/file/d/1DnnUh_QuMfj7yxhTZGtrSHehllBW1uEX/view", "recent": 1, "steps": ["התייחסות יומיומית", "הימנעות מהבטחות", "מתן מקום לאי-ידיעה", "תמיכה במשפחה"], "keywords": ["הורה נעדר", "אבא חטוף", "אמא חטופה", "הורה בשבי", "משפחת חטופים"], "audience": ["תלמיד"]}, {"topic": "אירוע ביטחוני", "sub": "הורה בכוחות הביטחון", "title": "ליווי תלמידים שהוריהם משרתים במילואים ובכוחות הביטחון", "link": "https://drive.google.com/file/d/1gRetvBZZMDpkPIkdTGjnUxJmtWYHeaBJ/view", "recent": 0, "steps": ["הכרה בחרדה היומיומית", "מסגרת קבועה לשיחות", "התראה אם יש פגיעה", "תיאום עם המשפחה"], "keywords": ["הורה במילואים", "אבא במילואים", "הורה בצבא", "הורה בכוחות הביטחון", "אבא בקרבות", "אמא במילואים"], "audience": ["תלמיד"]}, {"topic": "אירוע ביטחוני", "sub": "שיח כיתתי אחרי אירוע", "title": "שיח עם ילדים שנחשפו באופן אישי לאירוע", "link": "https://drive.google.com/file/d/1aJRNvdFWEyGQC1wMvBg0Wi-DZC0_Jq3-/view", "recent": 1, "steps": ["אבחנה בין נחשפים לאחרים", "שיח אישי לפני הכיתתי", "הימנעות מחשיפה משנית"], "keywords": ["ילדים שנחשפו", "נחשפו לאירוע", "תלמידים שראו", "עדים לאירוע", "חשיפה אישית"], "audience": ["כיתה"]}, {"topic": "אירוע ביטחוני", "sub": "שיח כיתתי אחרי אירוע", "title": "בשורה מרה לתלמידים בעת ריחוק", "link": "https://drive.google.com/file/d/1pAPn_ST2IpWQESyR0yaT1UfTbkw_VMTH/view", "recent": 0, "steps": ["התאמת המסירה לפורמט", "הקפדה על נוכחות מבוגר", "מעקב אחרי השיחה"], "keywords": ["בשורה מרה ריחוק", "בשורה לא פנים אל פנים", "בשורה מרחוק", "שיחה מרחוק"], "audience": ["כיתה"]}, {"topic": "אירוע ביטחוני", "sub": "מה לעשות באירוע חירום", "title": "מה לעשות בעת אירוע חירום", "link": "https://drive.google.com/file/d/1usATrqXrNM3O-jAAl1WBboNlWOcH50etQCAKv67wrNg/view", "recent": 0, "steps": ["רצף פעולות", "מי מתקשרים", "איך מנהלים", "תיעוד"], "keywords": ["מה לעשות בחירום", "אירוע חירום כללי", "פעולות חירום ראשונות"], "audience": ["כל"]}, {"topic": "אירוע ביטחוני", "sub": "מה לעשות באירוע חירום", "title": "התערבות בעת חירום - סיכום מפגשי הדרכה", "link": "https://drive.google.com/file/d/1shEhdhIhPYylPHusZEx5g125UMdRN2JzMlD87Oms80Q/view", "recent": 0, "steps": ["סיכום מרוכז של תוכן הדרכות", "עקרונות מנחים", "תרגול"], "keywords": ["התערבות בחירום", "סיכום הדרכות", "מפגשי הדרכה", "סיכום ידע יועצים"], "audience": ["יועצת"]}, {"topic": "תרחישים קיצוניים", "sub": "רצח / תקיפה", "title": "נקודות לשיחה בכיתה בעקבות אירוע תקיפה/רצח", "link": "https://drive.google.com/file/d/1MIGI6O268wtaxHhowxFck97YLXkOD09g/view", "recent": 0, "steps": ["התייעצות מקדימה", "הימנעות מפרטים גרפיים", "מתן מקום לפחד", "מסגרת ביטחון"], "keywords": ["רצח", "תקיפה", "אירוע אלים", "פיגוע", "שיחה אחרי רצח", "שיחה אחרי פיגוע"], "audience": ["כיתה"]}, {"topic": "תרחישים קיצוניים", "sub": "רצח / תקיפה", "title": "שיחה בעקבות רצח / תקיפה", "link": "https://drive.google.com/file/d/1YzCyl3PKJ9vofV7N_G5bHbLZ5YZxBXtc/view", "recent": 0, "steps": ["שיחה אישית עדינה", "הערכת רמת חשיפה", "הפניה לטיפול במידת הצורך"], "keywords": ["שיחה אחרי רצח", "שיחה אחרי תקיפה", "תלמיד שראה תקיפה"], "audience": ["תלמיד", "יועצת"]}, {"topic": "תרחישים קיצוניים", "sub": "רצח / תקיפה", "title": "מסרים חינוכיים בהקשר לאירוע רצח/תקיפה", "link": "https://drive.google.com/file/d/1MHquviVt3Ve8QhtwAaKHmiYDfmI7bYGR/view", "recent": 0, "steps": ["מסרים מנחים", "איזון בין אמת לפחד", "תקווה"], "keywords": ["מסרים חינוכיים רצח", "מסרים אחרי תקיפה", "מה אומרים לתלמידים"], "audience": ["צוות"]}, {"topic": "תרחישים קיצוניים", "sub": "אלימות במשפחה", "title": "הצעה להודעה בגן - רצח של ילד בידי הורה", "link": "https://drive.google.com/file/d/1_lm3I9Mg44Nhr6EBbbdHnV5lsx8_1Csm/view", "recent": 0, "steps": ["ייעוץ מיידי עם שפ\\"י", "הודעה רגישה במיוחד", "תיאום עם רווחה", "תמיכה אינטנסיבית"], "keywords": ["רצח ילד", "רצח בידי הורה", "אלימות חמורה במשפחה", "תרחיש קיצוני בגן"], "audience": ["גן"]}, {"topic": "תרחישים קיצוניים", "sub": "צוות לפיגוע", "title": "תדריך לצוות לפיגוע", "link": "https://drive.google.com/file/d/1iyiIpZwbv9cNX7AJkqFuCSC7CNpduiad/view", "recent": 0, "steps": ["רצף פעולות בית ספרי", "מי אחראי על מה", "תקשורת עם הורים"], "keywords": ["פיגוע", "תדריך פיגוע", "צוות אחרי פיגוע", "הגעת פיגוע"], "audience": ["צוות"]}, {"topic": "גן ילדים", "sub": "שיחה עם ילדי גן", "title": "שיחה עם ילדי גן לאחר טראומה", "link": "https://drive.google.com/file/d/1BXzrLBfBGPlTXPsxHGZrTwLRBV14LQ9j/view", "recent": 0, "steps": ["שפה פשוטה", "תחושת ביטחון", "משחק כדרך עיבוד", "נוכחות יציבה"], "keywords": ["ילדי גן", "טראומה בגן", "גן ילדים אחרי טראומה", "שיחה עם פעוטות"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה עם ילדי גן", "title": "תדריך לשיחה עם ילדי גן לאחר טראומה", "link": "https://drive.google.com/file/d/1_lI_BfYoAZ7k2drksJtvSPN28qg7fJxI/view", "recent": 0, "steps": ["פתיחה ברורה ופשוטה", "הקשבה לשאלות", "חזרה לשגרה"], "keywords": ["תדריך גן טראומה", "שיחה גן אחרי טראומה", "גננת לאחר אירוע"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה עם ילדי גן", "title": "תדריך לילדי גן שנחשפו לאירוע טראומטי", "link": "https://drive.google.com/file/d/1giEzFNaV0TG46O4_7b4mZe7ukDfTfaRQ/view", "recent": 0, "steps": ["זיהוי תגובות", "תמיכה הולמת לגיל", "תיאום עם הורי הגן"], "keywords": ["ילדי גן נחשפו", "גן אירוע טראומטי", "תדריך גן ילדים"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה בגן על מוות", "title": "שיחה לילדי גן - מוות", "link": "https://drive.google.com/file/d/1boRhKGz0tDrJ50khfqVlrhkbRp6bWEp8/view", "recent": 0, "steps": ["שפה ישירה לא מטעה", "הימנעות מ\\"נרדם\\"", "מענה לשאלות חוזרות", "נוכחות יציבה"], "keywords": ["גן מוות", "שיחה בגן על מוות", "איך מסבירים מוות לפעוט"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה בגן על מוות", "title": "שיחה בגן לאחר פטירה", "link": "https://drive.google.com/file/d/1j6wCL5NzM-oGrJtJl0wQMCy7CkREbY9I/view", "recent": 0, "steps": ["פתיחה רגישה", "שפה גילאית", "משחק כדרך לעבד"], "keywords": ["גן אחרי פטירה", "פטירה גן ילדים", "גננת אחרי מוות"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה בגן על מוות", "title": "משפטי פתיחה לגננת בעקבות מוות", "link": "https://drive.google.com/file/d/1EMNkts9k0_tt2ACLe_ZbO3zQ3vmf5Se3/view", "recent": 0, "steps": ["בנק של משפטי פתיחה", "התאמה לסיטואציה", "דוגמאות"], "keywords": ["משפטי פתיחה גננת", "איך מתחילים בגן", "גננת פותחת"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "שיחה בגן על מוות", "title": "עקרונות לשיחה בגן ילדים בעקבות פטירה", "link": "https://drive.google.com/file/d/12Nof7g4WKKqFp6cFqNQ71Xm2Fmsu6MXfYogwh5hPIRk/view", "recent": 0, "steps": ["עקרונות מנחים", "מה לא לעשות", "מה כן"], "keywords": ["עקרונות גן פטירה", "עקרונות גן ילדים", "שיחה בגן ילדים"], "audience": ["גן"]}, {"topic": "גן ילדים", "sub": "הורי הגן", "title": "שיח של הורי גן עם ילדם בעקבות אובדן בגן", "link": "https://drive.google.com/file/d/1dfsr4GwHbfqNTc7-AhQdlSTjJZUFcSAY/view", "recent": 1, "steps": ["הכוונה להורי הגן", "מה לומר ולא לומר", "התאמה לילד הספציפי"], "keywords": ["הורי גן", "שיח של הורים", "ילד אחר מהגן נפטר", "אובדן בגן"], "audience": ["הורה"]}, {"topic": "גן ילדים", "sub": "הורי הגן", "title": "מכתב להורים אירוע בגן", "link": "https://drive.google.com/file/d/1UwGySfHtql3HjsiV5_4sj5LCGDKIqRGH/view", "recent": 0, "steps": ["תבנית מוכנה", "התאמה לאירוע", "נימה רגישה"], "keywords": ["מכתב להורי גן", "הודעה להורי גן", "אירוע בגן הודעה"], "audience": ["הורה"]}, {"topic": "גן ילדים", "sub": "גן - תדריך כללי", "title": "גנים תדריך", "link": "https://drive.google.com/file/d/1vqc8xCJ6_1ef8NGzuCFNDdY6FE3S9urh/view", "recent": 1, "steps": ["תדריך מקיף לגן", "הכוונה לגננות"], "keywords": ["גנים תדריך", "תדריך לגן", "גן כללי"], "audience": ["גן"]}, {"topic": "צוות חינוכי", "sub": "מפת\\"ח - תדריך מרכזי", "title": "מפת\\"ח - תדריך לצוות", "link": "", "recent": 0, "steps": ["תדריך מקיף לצוות", "כלים לעבודה"], "keywords": ["מפתח", "תדריך מפתח", "תדריך לצוות מקיף", "מפת\\"ח"], "audience": ["צוות"]}, {"topic": "צוות חינוכי", "sub": "פטירת איש צוות", "title": "הנחיות לצוות בעקבות פטירת הורה של תלמיד", "link": "https://drive.google.com/file/d/1EkJGURq5d_ENda8ZO3_APaxPJWFfFCrf/view", "recent": 0, "steps": ["פעולות יום ראשון", "הכנה לקראת חזרה", "תיאום עם המשפחה"], "keywords": ["פטירת הורה תלמיד", "הנחיות לצוות", "איש צוות עוזר", "מות הורה במשפחה"], "audience": ["צוות"]}, {"topic": "צוות חינוכי", "sub": "פטירת איש צוות", "title": "תדריך לבית הספר המלווה איש צוות", "link": "https://drive.google.com/file/d/1qNf9qiUTB9e_I_Z7veWdUlrBl-Rk3g-y/view", "recent": 0, "steps": ["ליווי מקצועי", "התאמות בעבודה", "תמיכה רגשית"], "keywords": ["בית ספר מלווה צוות", "איש צוות במשבר", "מורה במשבר", "ליווי איש צוות"], "audience": ["צוות"]}, {"topic": "צוות חינוכי", "sub": "פטירת איש צוות", "title": "שיח בכיתות בעקבות פטירת איש צוות", "link": "https://drive.google.com/file/d/1tYdZqZ68OsWA6KsHxPftBRXBqYEW5Z9G/view", "recent": 0, "steps": ["שיחה בכיתות", "תיאום עם המשפחה", "אזכרה"], "keywords": ["פטירת מורה", "מורה נפטר", "איש צוות נפטר", "שיחה אחרי פטירת מורה"], "audience": ["כיתה"]}, {"topic": "צוות חינוכי", "sub": "שיחה עם המורים", "title": "תדריך שיחה עם המורים בעקבות אסון", "link": "https://drive.google.com/file/d/1c3WrtKYiNHHVZZNNwf4IkUm8MXzfE9IA/view", "recent": 0, "steps": ["ישיבת צוות חירום", "הכנת המורים לכיתה", "תמיכה הדדית"], "keywords": ["שיחה עם מורים", "הכנת מורים", "מורים אחרי אסון", "חדר מורים"], "audience": ["צוות"]}, {"topic": "צוות חינוכי", "sub": "שיחה איש צוות עם תלמיד", "title": "מתווה לשיחה איש צוות-תלמיד", "link": "https://drive.google.com/file/d/1de2MdOUg2fE9T086EZkXuLk8gA99Cr0g/view", "recent": 1, "steps": ["פתיחה", "מהלך", "סיום", "מעקב"], "keywords": ["שיחה צוות תלמיד", "מתווה שיחה", "מורה תלמיד", "איש צוות תלמיד"], "audience": ["צוות", "תלמיד"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "תבניות מכתבים", "title": "דגם מכתב להורים ודוגמאות", "link": "https://drive.google.com/file/d/1I5J6JAMNKpoN3P5kks2sIukkEW1EzKzn/view", "recent": 0, "steps": ["דגם בסיסי", "דוגמאות מותאמות לאירועים שונים"], "keywords": ["דגם מכתב", "תבנית מכתב הורים", "דוגמאות מכתבים", "מכתבים להורים"], "audience": ["הורה"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "תבניות מכתבים", "title": "מכתב להורים אירוע חירום", "link": "https://drive.google.com/file/d/1E4bWQ3frWreO0se8VaQqFLEJquWFUaBD/view", "recent": 0, "steps": ["תבנית למקרי חירום"], "keywords": ["מכתב הורים חירום", "הודעה להורים", "מכתב חירום"], "audience": ["הורה"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "תבניות מכתבים", "title": "תדריך למכתב להורים", "link": "https://drive.google.com/file/d/1pJ_7ObVt3S_aF0axSUVeAz6VLMoQ6nNs/view", "recent": 0, "steps": ["הנחיות לכתיבה", "מה לכלול ולא לכלול"], "keywords": ["תדריך למכתב", "איך כותבים מכתב להורים", "הנחיות לכתיבת מכתב"], "audience": ["הורה"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "תבניות מכתבים", "title": "הנחיות לכתיבת מכתב בית ספרי להורים בעקבות משבר קיומי", "link": "https://drive.google.com/file/d/1-0z-KEcI8MB8rjjaz_C-4A3UMJt7h0jqrT_bpDNpVJM/view", "recent": 0, "steps": ["הנחיות מקצועיות לכתיבה", "מאזן רגישות ומידע"], "keywords": ["מכתב משבר קיומי", "מכתב אחרי משבר", "הנחיות מכתב משבר"], "audience": ["הורה"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "עקרונות סיוע להורים", "title": "עקרונות סיוע להורים בעקבות אסון", "link": "https://drive.google.com/file/d/1imV_StJ59e0B8AMFteK_NOVM8l8XhLjx/view", "recent": 0, "steps": ["עקרונות מנחים", "דברים שמסייעים", "דברים שמזיקים"], "keywords": ["עקרונות סיוע", "סיוע להורים", "איך עוזרים להורים", "הורים בעקבות אסון"], "audience": ["הורה"]}, {"topic": "הורים - מכתבים והנחיות", "sub": "שיחת מורה עם הורה", "title": "שיחה של מורה/גננת עם הורה", "link": "https://drive.google.com/file/d/1_lip-stD4sdn3d4a47Gv8ERz7Oy2hqp2/view", "recent": 0, "steps": ["הכנה לשיחה", "פתיחה", "מהלך", "סיכום"], "keywords": ["שיחה מורה הורה", "גננת הורה", "שיחה עם הורה", "התקשרות הביתה"], "audience": ["צוות", "הורה"]}, {"topic": "טפסים והפניות", "sub": "פסיכיאטר", "title": "טופס הפניה לפסיכיאטר לאבחון", "link": "https://drive.google.com/file/d/1DU5DYMOyPT9e-Wd4yuzxbZjm-xS2RIhPFXEanfHQZT0/view", "recent": 0, "steps": ["מילוי טופס", "תיאום ישיר"], "keywords": ["הפניה פסיכיאטר", "אבחון פסיכיאטרי", "טופס פסיכיאטר", "הפנייה לאבחון"], "audience": ["יועצת"]}, {"topic": "טפסים והפניות", "sub": "פסיכיאטר", "title": "מכתב הפנייה לפסיכיאטר", "link": "https://drive.google.com/file/d/1WQsxa60qXbSICqElPRqTsTt66eyzr3r6/view", "recent": 0, "steps": ["מכתב מסכם", "התאמה לפסיכיאטר"], "keywords": ["מכתב הפנייה", "הפניה פסיכיאטר מכתב", "הפניית פסיכיאטר"], "audience": ["יועצת"]}, {"topic": "טפסים והפניות", "sub": "רווחה ומוקדים", "title": "טופס מוקד ילדים בסיכון", "link": "https://drive.google.com/file/d/1t2xHSaAaEOtDOfDz2vV_1oLoF6iCmk55/view", "recent": 0, "steps": ["מילוי טופס דיווח", "דיווח דחוף"], "keywords": ["מוקד ילדים בסיכון", "118", "דיווח חובה", "ילדים בסיכון", "רווחה ילדים"], "audience": ["יועצת"]}, {"topic": "תכנית בטחון", "sub": "בניית תכנית", "title": "דף לבניית תכנית בטחון", "link": "https://drive.google.com/file/d/10l6zLlKYrDocSiq7rKOLymTgLFaFFO_u/view", "recent": 0, "steps": ["זיהוי סימני אזהרה אישיים", "3 אנשי קשר תומכים", "הסרת אמצעים מסוכנים", "תכנית מתי לפנות"], "keywords": ["בניית תכנית בטחון", "דף לתכנית", "תכנית בטחון אישית", "safety plan"], "audience": ["תלמיד", "יועצת"]}, {"topic": "תכנית בטחון", "sub": "בניית תכנית", "title": "תכנית בטחון - דגשים ועקרונות", "link": "https://drive.google.com/file/d/10tnkPgyxJghVYFQCJDdc9YuyQW-Y2AdB/view", "recent": 0, "steps": ["עקרונות מנחים", "מה חשוב להקפיד"], "keywords": ["דגשים ועקרונות", "עקרונות תכנית בטחון", "דגשים safety plan"], "audience": ["יועצת"]}, {"topic": "תכנית בטחון", "sub": "בניית תכנית", "title": "תכנית בטחון - דוגמא", "link": "https://drive.google.com/file/d/1hKULlVXiwtioN95Eon8yjH6DRPmqdPfS/view", "recent": 0, "steps": ["דוגמה מלאה לעיון"], "keywords": ["דוגמא תכנית בטחון", "דוגמה safety plan", "תכנית בטחון מילוי"], "audience": ["יועצת"]}, {"topic": "תכנית בטחון", "sub": "כרטיס בטחון לכיס", "title": "כרטיס בטחון", "link": "https://drive.google.com/file/d/1LXNutH6NsnbNtDjjblLW62QfJ9s2DlN1/view", "recent": 0, "steps": ["כרטיס מודפס", "לשמירה בכיס/בארנק"], "keywords": ["כרטיס בטחון", "כרטיס לכיס", "safety card", "תלמיד בכיס"], "audience": ["תלמיד"]}, {"topic": "תכנית בטחון", "sub": "כרטיס בטחון לכיס", "title": "כרטיס בטחון לגיל הרך", "link": "https://drive.google.com/file/d/10gqJDE1NCJHbIkgqwQ_LqyrI9SETTHSQ/view", "recent": 0, "steps": ["התאמה לגיל הרך", "תמונות וסמלים"], "keywords": ["כרטיס בטחון גן", "גיל רך כרטיס", "גן ילדים בטחון", "כרטיס לפעוט"], "audience": ["גן"]}, {"topic": "תכנית בטחון", "sub": "בוחרים בחיים", "title": "בקשת עזרה - מתוך \\"בוחרים בחיים\\"", "link": "https://drive.google.com/file/d/113c8ED57GHEay5yMHGTkRbPC3QWQ8_UU/view", "recent": 0, "steps": ["מתי לבקש עזרה", "איך לבקש", "ממי"], "keywords": ["בוחרים בחיים", "בקשת עזרה", "תכנית בוחרים בחיים"], "audience": ["תלמיד"]}, {"topic": "תכנית בטחון", "sub": "המסע שלי לבטחון", "title": "המסע שלי לבטחון", "link": "https://drive.google.com/file/d/18tjA0YgB4AvQ9X2ZfOzgQssNYWgtFpj8/view", "recent": 0, "steps": ["חוברת מסע", "תהליך עם התלמיד"], "keywords": ["המסע שלי", "מסע לבטחון", "תכנית מסע", "safety journey"], "audience": ["תלמיד"]}, {"topic": "תכנית בטחון", "sub": "תדריך בטחוני", "title": "תדריך בטחוני (כללי)", "link": "https://drive.google.com/file/d/1MJt6EqNL1Z1UJBxAwQpVfBCc6lEGtJFERBDPF8TRQ8g/view", "recent": 0, "steps": ["תדריך מקיף", "עקרונות + יישום"], "keywords": ["תדריך בטחוני", "תדריך כללי לבטחון", "תיק בטחוני"], "audience": ["יועצת"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "תיק צל\\"ח", "title": "תיק צל\\"ח מרוכז", "link": "https://drive.google.com/file/d/17xuLdKb4sNdEMdNu-Dd_RWVmTQ3g59le/view", "recent": 0, "steps": ["תיק מרוכז של חומרים", "מבנה הצוות", "תהליכי עבודה"], "keywords": ["תיק צלח", "צוות חירום", "תיק מרוכז צלח", "מאסטר צלח"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "יום אירוע", "title": "צל\\"ח ביום אירוע ולאחריו", "link": "https://drive.google.com/file/d/1Py_WF-13A6Ou9SnVVGz5FPAiZD9DHhWT/view", "recent": 0, "steps": ["פעולות ביום האירוע", "פעולות בימים שאחרי", "תיעוד"], "keywords": ["צלח יום אירוע", "צלח אחרי", "יום האירוע צוות חירום"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "מפגשי צל\\"ח", "title": "ניהול סדר היום ומפגשי צל\\"ח", "link": "https://drive.google.com/file/d/1Mk7JGbSm9YO75d8kaH2HxMofz2TUHFfE/view", "recent": 1, "steps": ["סדר יום מפורט", "מבנה המפגש", "תפקידים"], "keywords": ["סדר יום צלח", "מפגשי צלח", "ניהול מפגש צלח", "מבנה מפגש חירום"], "audience": ["יועצת"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "טיולים וחוץ בית-ספרי", "title": "נוהל טיפול באירוע חירום בטיולים", "link": "https://drive.google.com/file/d/1rtClG7v1FGfZkreVRNAhQXZY348oYAJi/view", "recent": 0, "steps": ["נוהל ייעודי לטיולים", "תקשורת עם בית הספר", "פינוי וטיפול"], "keywords": ["טיול", "אירוע בטיול", "פעילות חוץ", "חוץ בית ספרי", "נוהל טיולים"], "audience": ["צוות"]}, {"topic": "ייעוץ טלפוני", "sub": "תדריך ייעוץ", "title": "ייעוץ טלפוני - מצגת", "link": "", "recent": 0, "steps": ["מה היא צריכה ברגע זה?", "האם יש סכנה מיידית?", "אם יש - הפניה לחירום", "אם לא - מסגרת ופתרונות"], "keywords": ["ייעוץ טלפוני", "שיחת ייעוץ", "הדרכה בטלפון", "יועצת מתקשרת"], "audience": ["יועצת"]}, {"topic": "ייעוץ טלפוני", "sub": "שיחה טלפונית עם תלמיד", "title": "שיחה טלפונית אישית עם תלמיד", "link": "https://drive.google.com/file/d/1Pd2VZE-9ZeSKRuHyJ-6C9Dh5Ad3hxNq5/view", "recent": 0, "steps": ["פתיחה רגישה", "הקשבה", "הערכה"], "keywords": ["שיחה טלפונית עם תלמיד", "תלמיד בטלפון", "שיחה אישית מרחוק"], "audience": ["תלמיד"]}, {"topic": "פעילויות וסדנאות", "sub": "סדנאות למורים", "title": "נחמה - לחשוב מול הרוח - סדנא למורים", "link": "https://drive.google.com/file/d/1Wv_MVQbZAmI5PyOxmujQMqSYZNH9dsRy/view", "recent": 0, "steps": ["סדנא מובנית", "תרגול", "שיח בקבוצת מורים"], "keywords": ["סדנא למורים", "נחמה", "לחשוב מול הרוח", "מורים אחרי אסון"], "audience": ["צוות"]}, {"topic": "פעילויות וסדנאות", "sub": "סדנאות למורים", "title": "סדנה אחרי אובדן - היגדים", "link": "https://drive.google.com/file/d/1tGL3tueW9reEt8z-78DolHBBGusEsekN/view", "recent": 0, "steps": ["סדנה מבוססת היגדים", "דיון על משפטי מפתח"], "keywords": ["סדנה אובדן", "היגדים", "משפטי מפתח", "סדנה אבל"], "audience": ["צוות", "תלמיד"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "גלויה מרכזת כלים ופעילויות חרבות ברזל", "link": "https://drive.google.com/file/d/1upQ-PAc3TsfB7A5VxOWstaplMA54eamc/view", "recent": 1, "steps": ["אוסף מרוכז של כלים", "פעילויות"], "keywords": ["גלויה כלים", "אוסף כלים", "פעילויות חרבות ברזל", "כלי חוסן"], "audience": ["תלמיד", "הורה"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "תרגול נשימה (וידאו)", "link": "", "recent": 0, "steps": ["וידאו מודרך", "נשימות איטיות", "הקרקעה"], "keywords": ["נשימה", "תרגול נשימה", "הרגעה", "תרגול חרדה", "וידאו נשימה"], "audience": ["תלמיד"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "קלפי שאלות חוזקות", "link": "", "recent": 0, "steps": ["ערכת קלפים", "שאלות על חוזקות", "שיח אישי או קבוצתי"], "keywords": ["קלפי חוזקות", "קלפי שאלות", "כלי חוזקות", "קלפים תרפויטיים"], "audience": ["תלמיד"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "גברת תקווה, מר ממד וגברת עזרה", "link": "", "recent": 0, "steps": ["מודל באמצעות דמויות", "נגישות לילדים"], "keywords": ["גברת תקווה", "מודל מטאפורי", "מטאפורות", "דמויות חוסן"], "audience": ["כל"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "מודל מעש\\"ה", "link": "", "recent": 0, "steps": ["מודל מעש\\"ה לעבודה"], "keywords": ["מעשה", "מודל מעשה", "מודל התערבות", "מ.ע.ש.ה"], "audience": ["כל"]}, {"topic": "פעילויות וסדנאות", "sub": "כלים לחוסן ולהרגעה", "title": "מה בשליטתי - כלי CBT", "link": "", "recent": 0, "steps": ["זיהוי מה בשליטתי", "התמקדות בשליטה", "הרפיית מה שלא בשליטה"], "keywords": ["מה בשליטתי", "בשליטתי לא בשליטתי", "CBT", "מעגלי השליטה"], "audience": ["כל"]}, {"topic": "פעילויות וסדנאות", "sub": "פתיחת מפגש", "title": "שירים מחזקים לפתיחת מפגש", "link": "", "recent": 0, "steps": ["בנק שירים", "הצעות לפתיחת מפגש"], "keywords": ["שירים מחזקים", "פתיחת מפגש", "שירי חיזוק", "פתיחת מפגש קבוצתי"], "audience": ["קבוצה"]}, {"topic": "חוסן לצוות", "sub": "", "title": "אריה ולביאה", "link": "https://www.canva.com/design/DAHDrqH6Wjo/view", "recent": 0, "steps": [], "keywords": ["פעילות צוות", "כוח", "אריה", "ולביאה"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "העוגן שבפנים - גש\\"ר מאח\\"ד", "link": "https://www.canva.com/d/0rIOW_XiURtUA7x", "recent": 0, "steps": [], "keywords": ["עוגן", "גשר מאחד", "ויסות", "העוגן", "שבפנים", "מאח"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "יש בי כוח - מסע וחוסן פנימי", "link": "https://www.canva.com/d/I-3metIMO-LUhA7", "recent": 0, "steps": [], "keywords": ["גשר מאחד", "כוח פנימי", "כוח", "מסע", "וחוסן", "פנימי"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "גש\\"ר מאח\\"ד", "link": "https://www.canva.com/d/_I1gqWTNkc1ydYK", "recent": 0, "steps": [], "keywords": ["מודל גשר", "התמודדות", "מאח"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "גש\\"ר מאח\\"ד - מורחב", "link": "https://www.canva.com/d/kWub41wOyNB8ZGD", "recent": 0, "steps": [], "keywords": ["מודל גשר", "מצגת מלאה", "מאח", "מורחב"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "גשר מאחד", "link": "https://www.canva.com/d/hPjiBS5S0a9mxz0", "recent": 0, "steps": [], "keywords": ["מודל גשר", "גשר", "מאחד"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "אריה שואג", "link": "https://www.canva.com/d/bXs7nz0ARiTAEuW", "recent": 0, "steps": [], "keywords": ["שאגת הארי", "אומץ", "אריה", "שואג"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "עם כלביא - מצגת", "link": "https://www.canva.com/d/c1Smvary3Q2eCxm", "recent": 0, "steps": [], "keywords": ["מלחמה", "עם כלביא", "כלביא", "מצגת"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "עם כלביא - פוסטר", "link": "https://www.canva.com/d/mE6xz5e8FWl9nEC", "recent": 0, "steps": [], "keywords": ["פוסטר", "עם כלביא", "כלביא", "פוסטר"], "audience": ["יועצת", "צוות"]}, {"topic": "תכנית בטחון", "sub": "", "title": "המסע שלי לבטחון", "link": "https://www.canva.com/d/33mcX5-TIeAN-l2", "recent": 0, "steps": [], "keywords": ["בטחון", "מסע", "המסע", "שלי", "לבטחון"], "audience": ["יועצת", "צוות"]}, {"topic": "תכנית בטחון", "sub": "", "title": "המסע שלי לבטחון - גרסה מקוצרת", "link": "https://www.canva.com/d/60NFuN_nwE2iUMU", "recent": 0, "steps": [], "keywords": ["בטחון", "מקוצר", "המסע", "שלי", "לבטחון", "גרסה", "מקוצרת"], "audience": ["יועצת", "צוות"]}, {"topic": "תכנית בטחון", "sub": "", "title": "פנקס הבטחון שלי", "link": "https://www.canva.com/design/DAHBVLjcWE4/view", "recent": 0, "steps": [], "keywords": ["פנקס", "בטחון", "פנקס", "הבטחון", "שלי"], "audience": ["יועצת", "צוות"]}, {"topic": "תכנית בטחון", "sub": "", "title": "פנקס בטחון - הסבר", "link": "https://www.canva.com/d/o6rYqpqzxGVGgzl", "recent": 0, "steps": [], "keywords": ["פנקס", "הסבר", "פנקס", "בטחון", "הסבר"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "לב הארי - פעימות של חוסן", "link": "https://www.canva.com/d/1d9ZSCMpeMcH2eY", "recent": 0, "steps": [], "keywords": ["לב הארי", "פעימות", "הארי", "פעימות", "חוסן"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן לצוות", "sub": "", "title": "עוגנים בשליטה - סדנת טכנולוגיה ו-AI", "link": "https://www.canva.com/d/Z28dtO2dQNHRwCz", "recent": 0, "steps": [], "keywords": ["בינה מלאכותית", "סדנה", "מסכים", "עוגנים", "בשליטה", "סדנת", "טכנולוגיה"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן לצוות", "sub": "", "title": "מפגש חוסן - לוקחים אוויר (א)", "link": "https://www.canva.com/d/ZnrTri---pJDZEI", "recent": 0, "steps": [], "keywords": ["נשימה", "מפגש", "הרגעה", "מפגש", "חוסן", "לוקחים", "אוויר"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן לצוות", "sub": "", "title": "מפגש חוסן - לוקחים אוויר (ב)", "link": "https://www.canva.com/d/njH9Om9mOpyXLLT", "recent": 0, "steps": [], "keywords": ["נשימה", "מפגש", "מפגש", "חוסן", "לוקחים", "אוויר"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן לצוות", "sub": "", "title": "מפגש חוסן בימים של משבר", "link": "https://www.canva.com/design/DAEe6ldf6sI/view", "recent": 0, "steps": [], "keywords": ["משבר", "מפגש", "מפגש", "חוסן", "בימים", "משבר"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "מפגש חוסן - הכוח שבי", "link": "https://www.canva.com/design/DAF094Uzgac/view", "recent": 0, "steps": [], "keywords": ["כוחות", "מפגש", "מפגש", "חוסן", "הכוח", "שבי"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "מסרים בוני חוסן", "link": "https://www.canva.com/d/IAmD6blSbFdhVy3", "recent": 0, "steps": [], "keywords": ["מסרים", "חיזוק", "מסרים", "בוני", "חוסן"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "מחברת הכוחות שבי", "link": "https://www.canva.com/design/DAG92y6zCbM/view", "recent": 0, "steps": [], "keywords": ["מחברת", "כוחות", "חוזקות", "מחברת", "הכוחות", "שבי"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "פנקס התגליות שלי - הכוחות שבי", "link": "https://www.canva.com/d/B-2GW0udiphbTpT", "recent": 0, "steps": [], "keywords": ["פנקס", "תגליות", "כוחות", "פנקס", "התגליות", "שלי", "הכוחות", "שבי"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "הכוחות שבדרך - פנקס למחנכת", "link": "https://www.canva.com/d/uhQ6rY2s1gdXJqq", "recent": 0, "steps": [], "keywords": ["מחנכת", "פנקס", "כוחות", "הכוחות", "שבדרך", "פנקס", "למחנכת"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "My Safety Anchor (אנגלית)", "link": "https://www.canva.com/design/DAHESV6GVrc/view", "recent": 0, "steps": [], "keywords": ["אנגלית", "עוגן", "אנגלית"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "Personal Resilience Toolkit (אנגלית)", "link": "https://www.canva.com/design/DAHESTEvTbM/view", "recent": 0, "steps": [], "keywords": ["אנגלית", "ערכה", "אנגלית"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "מברק של נחת", "link": "https://www.canva.com/d/wjJnGVGQOVVd7kf", "recent": 0, "steps": [], "keywords": ["נחת", "חיזוק", "הוקרה", "מברק", "נחת"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "פנקס מברק של נחת", "link": "https://www.canva.com/d/m1pT-DSSGKOrt9i", "recent": 0, "steps": [], "keywords": ["פנקס", "נחת", "פנקס", "מברק", "נחת"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "שובר עידוד", "link": "https://www.canva.com/d/s9Vt-1aSVOaWvZ5", "recent": 0, "steps": [], "keywords": ["עידוד", "שובר", "חיזוק", "שובר", "עידוד"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום והיערכות", "sub": "", "title": "שבוע חירום - משרד החינוך", "link": "https://www.canva.com/design/DAHAcFztnTU/view", "recent": 0, "steps": [], "keywords": ["שבוע חירום", "שבוע", "חירום", "משרד", "החינוך"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום והיערכות", "sub": "", "title": "התנסות באירוע חירום - סימולציה", "link": "https://www.canva.com/d/ivKkTbEwjbKj8PE", "recent": 0, "steps": [], "keywords": ["סימולציה", "תרגיל", "התנסות", "באירוע", "חירום", "סימולציה"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום והיערכות", "sub": "", "title": "מאגר מסמכים לשעת חירום", "link": "https://www.canva.com/d/PoNwZ8qtACcKDJy", "recent": 0, "steps": [], "keywords": ["מאגר", "מסמכים", "מאגר", "מסמכים", "לשעת", "חירום"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום והיערכות", "sub": "", "title": "חירום - מצגת מקיפה", "link": "https://www.canva.com/d/sklt0B8MR-Q2a9N", "recent": 0, "steps": [], "keywords": ["מצגת", "הדרכה", "חירום", "מצגת", "מקיפה"], "audience": ["יועצת", "צוות"]}, {"topic": "הורים", "sub": "", "title": "הורות מיטבית במציאות קיצונית", "link": "https://www.canva.com/d/vQwKi05eaeWHAPE", "recent": 0, "steps": [], "keywords": ["הורות", "הרצאה", "הורות", "מיטבית", "במציאות", "קיצונית"], "audience": ["יועצת", "צוות"]}, {"topic": "גן ילדים", "sub": "", "title": "Preschool Emergency Readiness (אנגלית)", "link": "https://www.canva.com/d/AhXoZJCLTLkblSh", "recent": 0, "steps": [], "keywords": ["אנגלית", "גן", "אנגלית"], "audience": ["יועצת", "צוות"]}, {"topic": "גן ילדים", "sub": "", "title": "Early Childhood Crisis Resilience (אנגלית)", "link": "https://www.canva.com/d/NQHf-FkLOQgTSMA", "recent": 0, "steps": [], "keywords": ["אנגלית", "גיל רך", "אנגלית"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום והיערכות", "sub": "", "title": "מתווה חזרה ללמידה דיפרנציאלית", "link": "https://www.canva.com/design/DAHEMay-UXk/view", "recent": 0, "steps": [], "keywords": ["חזרה ללמידה", "מתווה", "מתווה", "חזרה", "ללמידה", "דיפרנציאלית"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "צל\\"ח - הרצאת פתיחה", "link": "https://www.canva.com/d/qKuW8z8ofChqDt3", "recent": 0, "steps": [], "keywords": ["הרצאה", "פתיחה", "הרצאת", "פתיחה"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "צל\\"ח - מפגש עם מציאות שוברת שגרה", "link": "https://www.canva.com/d/Vf8CJ9yHB1AW3jX", "recent": 0, "steps": [], "keywords": ["שגרה", "מצגת", "מפגש", "מציאות", "שוברת", "שגרה"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "הטמעת צל\\"ח - צוות ניהול", "link": "https://www.canva.com/d/C4GT5x8HZ-eb3t5", "recent": 0, "steps": [], "keywords": ["הטמעה", "ניהול", "הטמעת", "צוות", "ניהול"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "מצגת 1 - הטמעה צוות ניהול", "link": "https://www.canva.com/d/NqoeV7XcFV_Y7xF", "recent": 0, "steps": [], "keywords": ["הטמעה", "מצגת", "הטמעה", "צוות", "ניהול"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "מצגת 2 - הטמעה צוות חינוכי", "link": "https://www.canva.com/d/RDgO4xFM1Iv61hj", "recent": 0, "steps": [], "keywords": ["הטמעה", "מצגת", "הטמעה", "צוות", "חינוכי"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "כלי חוסן צל\\"ח גנים", "link": "https://www.canva.com/d/bJSnMji5OPQO9Qz", "recent": 0, "steps": [], "keywords": ["גנים", "כלים", "כלי", "חוסן", "גנים"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "מצגת לתרגיל ארצי", "link": "https://www.canva.com/d/DwZkNoW8ExgWzfA", "recent": 0, "steps": [], "keywords": ["תרגיל ארצי", "מצגת", "לתרגיל", "ארצי"], "audience": ["יועצת", "צוות"]}, {"topic": "צל\\"ח - צוות חירום", "sub": "", "title": "צל\\"ח - עיצוב", "link": "https://www.canva.com/d/dIVsfkQc6qGwuR4", "recent": 0, "steps": [], "keywords": ["צלח", "עיצוב"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "ובחרת בחיים - לישיבת צוות", "link": "https://www.canva.com/design/DAEVM6s3Hxk/view", "recent": 0, "steps": [], "keywords": ["ישיבת צוות", "מניעה", "ובחרת", "בחיים", "לישיבת", "צוות"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "\\"ובחרת בחיים\\" - מליאת צוות (מלאה)", "link": "https://www.canva.com/d/z8J5BvZRjRiaxOO", "recent": 0, "steps": [], "keywords": ["מליאה", "68 שקפים", "ובחרת", "בחיים", "מליאת", "צוות", "מלאה"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "שבוע הגברת המודעות - QPR-T", "link": "https://www.canva.com/d/WHeiHWz_9LGZJmk", "recent": 0, "steps": [], "keywords": ["שומרי סף", "QPR", "שבוע", "הגברת", "המודעות"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "מניעת אובדנות (חרבות ברזל) - מלא", "link": "https://www.canva.com/design/DAF4LZK0ymM/view", "recent": 0, "steps": [], "keywords": ["מלחמה", "מצגת מלאה", "מניעת", "אובדנות", "חרבות", "ברזל", "מלא"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "מניעת אובדנות חרבות ברזל - מקוצר", "link": "https://www.canva.com/design/DAF4QSLCq74/view", "recent": 0, "steps": [], "keywords": ["מקוצר", "מניעת", "אובדנות", "חרבות", "ברזל", "מקוצר"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "מניעת אובדנות חרבות ברזל - לצוות", "link": "https://www.canva.com/design/DAGd8X63vyc/view", "recent": 0, "steps": [], "keywords": ["צוות", "מניעת", "אובדנות", "חרבות", "ברזל", "לצוות"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "מניעת אובדנות - מצגת הדרכה", "link": "https://www.canva.com/d/tAeGUpaTp2H4QXZ", "recent": 0, "steps": [], "keywords": ["הדרכה", "מניעת", "אובדנות", "מצגת", "הדרכה"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "מליאת צוות - כלים למניעת אובדנות", "link": "https://www.canva.com/d/V0Q8z6_UXy5c0Z5", "recent": 0, "steps": [], "keywords": ["מליאה", "כלים", "מליאת", "צוות", "כלים", "למניעת", "אובדנות"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "שומרי סף - הכשרה", "link": "https://www.canva.com/d/m7zFaFn6ktZw1A5", "recent": 0, "steps": [], "keywords": ["שומרי סף", "הכשרה", "שומרי", "הכשרה"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "הכוחות שבדרך - מניעת אובדנות", "link": "https://www.canva.com/design/DAGeIHE64pA/view", "recent": 0, "steps": [], "keywords": ["כוחות", "הכוחות", "שבדרך", "מניעת", "אובדנות"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "בשיחה עם תלמיד/ה בסיכון - אינפוגרפיקה", "link": "https://www.canva.com/d/iD7WtC3sEn0cFje", "recent": 0, "steps": [], "keywords": ["שיחה", "סיכון", "תרשים", "בשיחה", "תלמיד", "בסיכון", "אינפוגרפיקה"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "תדריך לצפייה מבוקרת", "link": "https://www.canva.com/d/tV-edH9VNuTSfA8", "recent": 0, "steps": [], "keywords": ["סדרה", "מסכים", "13 סיבות", "תדריך", "לצפייה", "מבוקרת"], "audience": ["יועצת", "צוות"]}, {"topic": "מצוקה נפשית", "sub": "", "title": "מאחורי החיוך - הכאב הנסתר", "link": "https://www.canva.com/design/DAG3fWwF2JQ/view", "recent": 0, "steps": [], "keywords": ["כאב נסתר", "איתור", "מאחורי", "החיוך", "הכאב", "הנסתר"], "audience": ["יועצת", "צוות"]}, {"topic": "מצוקה נפשית", "sub": "", "title": "מאחורי החיוך - בחן את עצמך", "link": "https://www.canva.com/design/DAG3jC03Xis/view", "recent": 0, "steps": [], "keywords": ["שאלון", "מאחורי", "החיוך", "בחן", "עצמך"], "audience": ["יועצת", "צוות"]}, {"topic": "מצוקה נפשית", "sub": "", "title": "עזרה ראשונה נפשית", "link": "https://www.canva.com/design/DAEOjBsjKs8/view", "recent": 0, "steps": [], "keywords": ["עזרה ראשונה", "עזרה", "ראשונה", "נפשית"], "audience": ["יועצת", "צוות"]}, {"topic": "אובדנות", "sub": "", "title": "רצף טיפולי - תרשים", "link": "https://www.canva.com/design/DAFNheBMjV0/view", "recent": 0, "steps": [], "keywords": ["רצף", "תרשים", "רצף", "טיפולי", "תרשים"], "audience": ["יועצת", "צוות"]}, {"topic": "כישורי חיים", "sub": "", "title": "מדברים כישורים לחיים - צוות ניהול", "link": "https://www.canva.com/design/DAG4SneKhYg/view", "recent": 0, "steps": [], "keywords": ["צוות ניהול", "מדברים", "כישורים", "לחיים", "צוות", "ניהול"], "audience": ["יועצת", "צוות"]}, {"topic": "כישורי חיים", "sub": "", "title": "מצגת אינטראקטיבית - כישורי חיים", "link": "https://www.canva.com/design/DAG4Ur-8fRI/view", "recent": 0, "steps": [], "keywords": ["אינטראקטיבי", "מצגת", "אינטראקטיבית", "כישורי", "חיים"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "פנקס למחנכת (מקיף)", "link": "https://www.canva.com/d/FQkppchZWTNN9TB", "recent": 0, "steps": [], "keywords": ["מחנכת", "108 עמודים", "פנקס", "למחנכת", "מקיף"], "audience": ["יועצת", "צוות"]}, {"topic": "כישורי חיים", "sub": "", "title": "שאלוני אקלים חינוכי מיטבי", "link": "https://www.canva.com/d/xCfEeJvETg5b_VH", "recent": 0, "steps": [], "keywords": ["אקלים", "שאלון", "שאלוני", "אקלים", "חינוכי", "מיטבי"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "מעגל הדאגה ומעגל ההשפעה", "link": "https://www.canva.com/d/VbkBPqQ3BvBSst0", "recent": 0, "steps": [], "keywords": ["קובי", "השפעה", "דאגה", "מעגל", "הדאגה", "ומעגל", "ההשפעה"], "audience": ["יועצת", "צוות"]}, {"topic": "כישורי חיים", "sub": "", "title": "דף עיצוב התנהגות", "link": "https://www.canva.com/d/M9dRmhP0RgLJGBk", "recent": 0, "steps": [], "keywords": ["התנהגות", "עיצוב", "התנהגות"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "מדברים גלויות - נושאים לדיון", "link": "https://www.canva.com/design/DAENgz3Uer8/view", "recent": 0, "steps": [], "keywords": ["גלויות", "דיון", "מדברים", "גלויות", "נושאים", "לדיון"], "audience": ["יועצת", "צוות"]}, {"topic": "כישורי חיים", "sub": "", "title": "נפגשים באוויר הפתוח", "link": "https://www.canva.com/design/DAENgbw-pKw/view", "recent": 0, "steps": [], "keywords": ["חוץ", "פעילות", "נפגשים", "באוויר", "הפתוח"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "פעילויות CBT - כלים טיפוליים", "link": "https://www.canva.com/d/Kt8LcZgQ8xYhJHO", "recent": 0, "steps": [], "keywords": ["CBT", "קוגניטיבי", "פעילויות", "כלים", "טיפוליים"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "מניפת שאלות לשיחה אישית", "link": "https://www.canva.com/d/ewqFfBpyOCE7TYK", "recent": 0, "steps": [], "keywords": ["שיחה אישית", "מניפה", "מניפת", "שאלות", "לשיחה", "אישית"], "audience": ["יועצת", "צוות"]}, {"topic": "מוגנות", "sub": "", "title": "שבוע מוגנות ומניעת פגיעות מיניות", "link": "https://www.canva.com/design/DAHAEjFOPNw/view", "recent": 0, "steps": [], "keywords": ["פגיעות מיניות", "מוגנות", "שבוע", "מוגנות", "ומניעת", "פגיעות", "מיניות"], "audience": ["יועצת", "צוות"]}, {"topic": "מוגנות", "sub": "", "title": "הכוחות שבדרך - מניעת פגיעות בילדים", "link": "https://www.canva.com/design/DAG9z-UIjS4/view", "recent": 0, "steps": [], "keywords": ["מניעת פגיעות", "הכוחות", "שבדרך", "מניעת", "פגיעות", "בילדים"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "קלפי רגשות", "link": "https://www.canva.com/d/Sy9s98SistPgzb-", "recent": 0, "steps": [], "keywords": ["קלפים", "רגשות", "קלפי", "רגשות"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "ברכות ואיחולים", "link": "https://www.canva.com/d/u_IOzl6Tm9ckcrc", "recent": 0, "steps": [], "keywords": ["ברכות", "ברכות", "ואיחולים"], "audience": ["יועצת", "צוות"]}, {"topic": "העצמה", "sub": "", "title": "תעודות הוקרה", "link": "https://www.canva.com/d/sizuMJnUpMtSrpR", "recent": 0, "steps": [], "keywords": ["תעודות", "תעודות", "הוקרה"], "audience": ["יועצת", "צוות"]}, {"topic": "העצמה", "sub": "", "title": "כרטיסי העצמה", "link": "https://www.canva.com/d/ytZfV1UiLJSmsJs", "recent": 0, "steps": [], "keywords": ["כרטיסים", "העצמה", "כרטיסי", "העצמה"], "audience": ["יועצת", "צוות"]}, {"topic": "העצמה", "sub": "", "title": "כל יום בוחרת מחדש", "link": "https://www.canva.com/d/eALoG56PTOdc6Pt", "recent": 0, "steps": [], "keywords": ["בחירה", "השראה", "יום", "בוחרת", "מחדש"], "audience": ["יועצת", "צוות"]}, {"topic": "מעברים", "sub": "", "title": "רצפים ושינויים", "link": "https://www.canva.com/d/4CASfk5eDRCvFtJ", "recent": 0, "steps": [], "keywords": ["שינוי", "מעבר", "רצפים", "ושינויים"], "audience": ["יועצת", "צוות"]}, {"topic": "מעברים", "sub": "", "title": "לקראת כיתה א'", "link": "https://www.canva.com/d/rxRANsKTdAaBOji", "recent": 0, "steps": [], "keywords": ["גן", "כיתה א", "לקראת", "כיתה"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "להדליק את התקווה - ישיבת צוות", "link": "https://www.canva.com/d/gSFaHV7i9ektBlA", "recent": 0, "steps": [], "keywords": ["חנוכה", "תקווה", "צוות", "להדליק", "התקווה", "ישיבת", "צוות"], "audience": ["יועצת", "צוות"]}, {"topic": "סופרוויז'ן", "sub": "", "title": "אורות בייעוץ - מפגש יועצים", "link": "https://www.canva.com/d/XdYta2EO4aZKqot", "recent": 0, "steps": [], "keywords": ["חנוכה", "שנה א", "אורות", "בייעוץ", "מפגש", "יועצים"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "אגרת פתיחת שנה", "link": "https://www.canva.com/d/1DLr6Ne7D9THD5u", "recent": 0, "steps": [], "keywords": ["אגרת", "פתיחת שנה", "אגרת", "פתיחת", "שנה"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "כישורי חיים - קישורים לתחילת שנה", "link": "https://www.canva.com/d/lxhF9SMd7iOPz9s", "recent": 0, "steps": [], "keywords": ["תחילת שנה", "קישורים", "כישורי", "חיים", "קישורים", "לתחילת", "שנה"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "חוזרים לשגרה - מצגת פעילויות", "link": "https://www.canva.com/design/DAEMA7JzZUQ/view", "recent": 0, "steps": [], "keywords": ["שגרה", "פעילויות", "חוזרים", "לשגרה", "מצגת", "פעילויות"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "חזרה ללימודים", "link": "https://www.canva.com/d/c5fwjJxP9cgcApm", "recent": 0, "steps": [], "keywords": ["חזרה", "חזרה", "ללימודים"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "עוגן של תקווה - חזרה ללימודים", "link": "https://www.canva.com/design/DAHEIxypPQY/view", "recent": 0, "steps": [], "keywords": ["עוגן", "תקווה", "עוגן", "תקווה", "חזרה", "ללימודים"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "חבילה עוברת - סיכום שנה", "link": "https://www.canva.com/d/tgi5_HjjAcZbJzR", "recent": 0, "steps": [], "keywords": ["סיכום שנה", "משחק", "חבילה", "עוברת", "סיכום", "שנה"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "גלגל הזיכרונות - מסכמים שנה", "link": "https://www.canva.com/d/9bk65hjjFZeXZn9", "recent": 0, "steps": [], "keywords": ["סיכום", "גלגל", "גלגל", "הזיכרונות", "מסכמים", "שנה"], "audience": ["יועצת", "צוות"]}, {"topic": "פתיחת שנה וסיומה", "sub": "", "title": "מוצאת את האור שבי - סיום מחצית", "link": "https://www.canva.com/d/ZLY2SN-DvmRrBl4", "recent": 0, "steps": [], "keywords": ["מחצית", "אור", "מוצאת", "האור", "שבי", "סיום", "מחצית"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "גירושין ופרידה (א)", "link": "https://www.canva.com/design/DAHAu7-1A2E/view", "recent": 0, "steps": [], "keywords": ["גירושין", "פרידה", "גירושין", "ופרידה"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים רגשיים", "sub": "", "title": "גירושין ופרידה (ב)", "link": "https://www.canva.com/design/DAHAu4K_Hw0/view", "recent": 0, "steps": [], "keywords": ["גירושין", "גירושין", "ופרידה"], "audience": ["יועצת", "צוות"]}, {"topic": "סופרוויז'ן", "sub": "", "title": "סופרוויז'ין - מצגת מקיפה", "link": "https://www.canva.com/d/VPn2lGf92Dijm3G", "recent": 0, "steps": [], "keywords": ["65 שקפים", "מפגשים", "סופרוויז", "מצגת", "מקיפה"], "audience": ["יועצת", "צוות"]}, {"topic": "סופרוויז'ן", "sub": "", "title": "מפגשי סופרוויז'ין", "link": "https://www.canva.com/d/fW6YC_1UK_OdEIG", "recent": 0, "steps": [], "keywords": ["לוח", "מפגשי", "סופרוויז"], "audience": ["יועצת", "צוות"]}, {"topic": "סופרוויז'ן", "sub": "", "title": "\\"דרכך משתקפת בי דרכי\\"", "link": "https://www.canva.com/d/XZnnua6291tR2pj", "recent": 0, "steps": [], "keywords": ["השתקפות", "זהות", "דרכך", "משתקפת", "דרכי"], "audience": ["יועצת", "צוות"]}, {"topic": "סופרוויז'ן", "sub": "", "title": "מפגש סיום סופרוויז'ין - \\"בית קפה\\"", "link": "https://www.canva.com/d/vfvnhd1xKkKbG7T", "recent": 0, "steps": [], "keywords": ["סיום שנה", "מפגש", "סיום", "סופרוויז", "בית", "קפה"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מפגש יועצי שנה א'", "link": "https://www.canva.com/d/CRPEqLAlD9OLUAB", "recent": 0, "steps": [], "keywords": ["שנה א", "מפגש", "יועצי", "שנה"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מליאת יועצות על-יסודי", "link": "https://www.canva.com/d/MdIFPRksDhAc1kR", "recent": 0, "steps": [], "keywords": ["מליאה", "מליאת", "יועצות", "יסודי"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מצגת מלווה למליאת פק\\"ל", "link": "https://www.canva.com/d/8IZoQthiPh7Hu99", "recent": 0, "steps": [], "keywords": ["פקל", "מצגת", "מלווה", "למליאת"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מפגש סיום לצוות", "link": "https://www.canva.com/d/JIo6Z7nBJ9Qk2zx", "recent": 0, "steps": [], "keywords": ["סיום", "מפגש", "סיום", "לצוות"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מפגש גננות - שיח עם הורים", "link": "https://www.canva.com/d/kEzk70xBA17w70V", "recent": 0, "steps": [], "keywords": ["גננות", "הורים", "מפגש", "גננות", "שיח", "הורים"], "audience": ["יועצת", "צוות"]}, {"topic": "כלים דיגיטליים", "sub": "", "title": "וובינר אפליקציות אפסקריפט", "link": "https://www.canva.com/d/N9RJC5iMoNz7Gl7", "recent": 0, "steps": [], "keywords": ["וובינר", "אפליקציות", "וובינר", "אפליקציות", "אפסקריפט"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "Mifgash Zevet 22.6", "link": "https://www.canva.com/design/DAHD_sz_aHY/view", "recent": 0, "steps": [], "keywords": ["מפגש צוות"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "איתכם בשגרה ובחירום - חני בלוי", "link": "https://www.canva.com/d/avO3CwqAvsZYJLr", "recent": 0, "steps": [], "keywords": ["שירותים", "אודות", "איתכם", "בשגרה", "ובחירום", "חני", "בלוי"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "שאגת הארי - תדריכים חשובים", "link": "https://www.canva.com/d/g3lzG3O9bTsO0TF", "recent": 0, "steps": [], "keywords": ["שאגת הארי", "תדריכים", "שאגת", "הארי", "תדריכים", "חשובים"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "המתנה שבבחירה", "link": "https://www.canva.com/d/qkWhua15NjHpCK1", "recent": 0, "steps": [], "keywords": ["בחירה", "רוניתי טנא", "המתנה", "שבבחירה"], "audience": ["יועצת", "צוות"]}, {"topic": "מליאות והשתלמויות", "sub": "", "title": "מסע כזה...", "link": "https://www.canva.com/d/S0qf4aOAS_M12Nn", "recent": 0, "steps": [], "keywords": ["מסע", "רוניתי טנא", "מסע", "כזה"], "audience": ["יועצת", "צוות"]}, {"topic": "חירום ואובדנות", "sub": "", "title": "מאגר כלים למניעת אובדנות", "link": "https://hani-bloy-lovable-app.lovable.app", "recent": 0, "steps": ["מאגר מרוכז של כלים, תדריכים ומשאבים למניעת אובדנות - הכל במקום אחד"], "keywords": ["אובדנות", "מאגר", "כלים", "מניעה", "שומרי סף", "איתור", "סיכון"], "audience": ["יועצת", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "גינת הכוחות", "link": "https://bloom-power-garden.lovable.app", "recent": 0, "steps": ["אפליקציה אינטראקטיבית לגילוי וטיפוח כוחות אישיים - כל כוח פורח כפרח בגינה"], "keywords": ["כוחות", "חוזקות", "גינה", "פריחה", "העצמה"], "audience": ["תלמיד", "יועצת"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "חוסן בזמן אמת", "link": "https://gemini.google.com/share/e2df595de42d", "recent": 0, "steps": ["כלי דיגיטלי לתרגול חוסן ברגעי לחץ - זמין מיידית"], "keywords": ["חוסן", "זמן אמת", "ויסות", "הרגעה"], "audience": ["יועצת", "תלמיד", "צוות"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "שאגת הארי", "link": "https://sites.google.com/view/chani-bloy-/בית", "recent": 0, "steps": ["אתר חוסן - פעימות של עוצמה פנימית"], "keywords": ["ארי", "שאגה", "חוסן", "אומץ"], "audience": ["תלמיד", "יועצת"]}, {"topic": "חוסן וכוחות", "sub": "", "title": "מסע של חוסן", "link": "https://gemini.google.com/share/b115f6f36f7a", "recent": 0, "steps": ["מסע אינטראקטיבי לבניית חוסן אישי"], "keywords": ["מסע", "חוסן", "תהליך"], "audience": ["תלמיד", "יועצת"]}]`);
+
+// ===== CONFIG =====
+const GUIDE_FILTER = p => !p.link || p.link.includes('drive.google.com') || p.link.includes('docs.google.com');
+const RES_FILTER   = p => p.link && (p.link.includes('canva.com') || p.link.includes('lovable.app') || p.link.includes('gemini.google') || p.link.includes('sites.google'));
+const getGuides    = () => PROTOCOLS.filter(GUIDE_FILTER);
+const getResources = () => PROTOCOLS.filter(RES_FILTER);
+
+const TCFG = {
+  'אובדנות':               {ico:'🆘',tile:'c-red',   hd:'bg-red',   acc:'cr-red'},
+  'אבל ואובדן':            {ico:'💔',tile:'c-red',   hd:'bg-red',   acc:'cr-red'},
+  'מצוקה נפשית':           {ico:'😰',tile:'c-gold',  hd:'bg-gold',  acc:'cr-gold'},
+  'מחלה ובריאות':          {ico:'🏥',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+  'אירוע ביטחוני':         {ico:'🛡️',tile:'c-slate', hd:'bg-slate', acc:'cr-slate'},
+  'תרחישים קיצוניים':      {ico:'🚨',tile:'c-red',   hd:'bg-red',   acc:'cr-red'},
+  'חירום ואובדנות':        {ico:'🆘',tile:'c-red',   hd:'bg-red',   acc:'cr-red'},
+  'חירום והיערכות':        {ico:'⚠️',tile:'c-slate', hd:'bg-slate', acc:'cr-slate'},
+  'גן ילדים':              {ico:'🌱',tile:'c-teal',  hd:'bg-teal',  acc:'cr-teal'},
+  'צוות חינוכי':           {ico:'👥',tile:'c-olive', hd:'bg-olive', acc:'cr-olive'},
+  'הורים - מכתבים והנחיות':{ico:'✉️',tile:'c-warm',  hd:'bg-warm',  acc:'cr-warm'},
+  'הורים':                 {ico:'👨‍👩‍👧',tile:'c-warm',  hd:'bg-warm',  acc:'cr-warm'},
+  'טפסים והפניות':         {ico:'📋',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+  'תכנית בטחון':           {ico:'🛡',tile:'c-teal',  hd:'bg-teal',  acc:'cr-teal'},
+  'צל"ח - צוות חירום':    {ico:'🚒',tile:'c-slate', hd:'bg-slate', acc:'cr-slate'},
+  'ייעוץ טלפוני':          {ico:'📞',tile:'c-olive', hd:'bg-olive', acc:'cr-olive'},
+  'מליאות והשתלמויות':     {ico:'📚',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+  "סופרוויז'ן":            {ico:'🔍',tile:'c-purple',hd:'bg-purple',acc:'cr-purple'},
+  'חוסן וכוחות':           {ico:'💪',tile:'c-teal',  hd:'bg-teal',  acc:'cr-teal'},
+  'חוסן לצוות':            {ico:'🤝',tile:'c-teal',  hd:'bg-teal',  acc:'cr-teal'},
+  'כלים רגשיים':           {ico:'🧠',tile:'c-purple',hd:'bg-purple',acc:'cr-purple'},
+  'כישורי חיים':           {ico:'✨',tile:'c-olive', hd:'bg-olive', acc:'cr-olive'},
+  'העצמה':                 {ico:'🌟',tile:'c-gold',  hd:'bg-gold',  acc:'cr-gold'},
+  'מוגנות':                {ico:'🔒',tile:'c-rose',  hd:'bg-rose',  acc:'cr-rose'},
+  'מעברים':                {ico:'🌊',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+  'פעילויות וסדנאות':      {ico:'🎯',tile:'c-gold',  hd:'bg-gold',  acc:'cr-gold'},
+  'פתיחת שנה וסיומה':      {ico:'🎒',tile:'c-gold',  hd:'bg-gold',  acc:'cr-gold'},
+  'כלים דיגיטליים':        {ico:'💻',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+  'למידה מרחוק':           {ico:'🌐',tile:'c-blue',  hd:'bg-blue',  acc:'cr-blue'},
+};
+const PRIORITY_TOPICS=['אובדנות','אבל ואובדן','מצוקה נפשית','אירוע ביטחוני','תרחישים קיצוניים','גן ילדים','צוות חינוכי','הורים - מכתבים והנחיות','תכנית בטחון','צל"ח - צוות חירום','ייעוץ טלפוני','פעילויות וסדנאות'];
+const cfg = t => TCFG[t] || {ico:'📄',tile:'c-slate',hd:'bg-slate',acc:'cr-slate'};
+
+// ===== UTILS =====
+const esc = s => String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ea  = s => String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+function getThumb(link){ const m=(link||'').match(/\/file\/d\/([a-zA-Z0-9_-]+)/); return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w320`:null }
+function dedup(arr){ const m={}; arr.forEach(p=>{const k=p.title;if(!m[k]||p.recent>(m[k].recent||0))m[k]=p}); return Object.values(m) }
+
+// ===== HEBREW SEARCH =====
+const HEB_PFX=['ושב','וב','ול','וכ','וה','ומ','שב','שה','שמ','שכ','של','בה','מה','לה','ש','ב','ל','מ','כ','ה','ו'];
+function stripHeb(w){ for(const p of HEB_PFX){if(w.startsWith(p)&&w.length>p.length+1)return w.slice(p.length)}return w }
+function hebBi(w1,w2){ if(w1.length<2||w2.length<2)return false; for(let i=0;i<=w1.length-2;i++){const b=w1.slice(i,i+2);if(/[א-ת]{2}/.test(b)&&w2.includes(b))return true}return false }
+
+function scoreP(p,q){
+  if(!q)return 0;
+  const raw=q.toLowerCase().split(/[\s,،.\-\/?!:؟"()]+/).filter(w=>w.length>1);
+  const words=[...new Set([...raw,...raw.map(stripHeb)])].filter(w=>w.length>1);
+  let s=0;
+  const tL=(p.title||'').toLowerCase(), topL=(p.topic||'').toLowerCase(), subL=(p.sub||'').toLowerCase();
+  const kwL=(p.keywords||[]).map(k=>k.toLowerCase()), audL=(p.audience||[]).map(a=>a.toLowerCase());
+  words.forEach(w=>{
+    if(tL===w)s+=8; else if(tL.includes(w))s+=5;
+    kwL.forEach(k=>{if(k===w)s+=5;else if(k.includes(w))s+=4;else if(w.includes(k)&&k.length>2)s+=2;if(hebBi(w,k))s+=1.5});
+    if(subL.includes(w))s+=2; if(topL.includes(w))s+=2;
+    audL.forEach(a=>{if(a.includes(w))s+=1});
+  });
+  return s;
+}
+
+// ===== NAV =====
+let curTab='home', audFilter=null, tpQuery='', stQuery='';
+
+function goTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.n-btn').forEach(b=>b.classList.remove('on'));
+  const homeBtn=document.getElementById('n-home');
+  homeBtn.style.background='linear-gradient(145deg,#aaa,#999)';
+  document.getElementById('pg-'+tab).classList.add('on');
+  const nMap={home:'n-home',topics:'n-topics',emergency:'n-emergency',studio:'n-studio',saved:'n-saved'};
+  const nel=document.getElementById(nMap[tab]);
+  if(nel) nel.classList.add('on');
+  if(tab==='home'){ homeBtn.style.background='linear-gradient(145deg,#9e2236,#7D1A2E)' }
+  curTab=tab;
+  document.querySelector('.app-c').scrollTop=0;
+  if(tab==='emergency') setTimeout(()=>document.getElementById('em-srch').focus(),150);
+  if(tab==='saved') renderSaved();
+  if(tab==='topics') renderTopics();
+  if(tab==='studio') renderStudio();
+}
+
+function goToTopic(topic){
+  goTab('topics');
+  setTimeout(()=>{
+    const el=document.querySelector('.acc[data-topic="'+topic+'"]');
+    if(el){if(!el.classList.contains('open'))el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'start'})}
+  },200);
+}
+
+// ===== HOME TILES =====
+function renderTiles(){
+  const el=document.getElementById('home-tiles');
+  const guides=dedup(getGuides()), counts={};
+  guides.forEach(p=>{counts[p.topic]=(counts[p.topic]||0)+1});
+  const topics=[...PRIORITY_TOPICS.filter(t=>counts[t]),...Object.keys(counts).filter(t=>!PRIORITY_TOPICS.includes(t)&&counts[t])];
+  el.innerHTML=topics.slice(0,12).map(t=>{
+    const c=cfg(t);
+    return '<button class="tile '+c.tile+'" onclick="goToTopic(this.dataset.t)" data-t="'+esc(t)+'">'
+      +'<span class="t-ico">'+c.ico+'</span>'
+      +'<span class="t-lbl">'+esc(t)+'</span>'
+      +'<span class="t-cnt">'+counts[t]+' תדריכים</span></button>';
+  }).join('');
+}
+
+// ===== CARD =====
+function renderCard(p,feat,q){
+  const c=cfg(p.topic), thumb=getThumb(p.link);
+  const titleH=q?esc(p.title).replace(new RegExp(q,'gi'),m=>'<span class="hl">'+m+'</span>'):esc(p.title);
+  const imgH=thumb?'<img class="gc-thumb" src="'+thumb+'" alt="" onerror="this.style.display=\'none\'">'
+    :'<div class="gc-ph">'+c.ico+'</div>';
+  let stepsH='';
+  if(p.steps&&p.steps.length){
+    stepsH='<div class="qs"><div class="qs-lbl">צעדים מיידיים</div>'
+      +p.steps.slice(0,3).map((s,i)=>'<div class="qs-step"><div class="qs-n">'+(i+1)+'</div><div>'+esc(s)+'</div></div>').join('')
+      +(p.steps.length>3?'<div style="font-size:9px;color:#aaa;padding:3px 0 0 25px">+'+( p.steps.length-3)+' צעדים נוספים...</div>':'')
+      +'</div>';
+  }
+  const audH=(p.audience||[]).map(a=>'<span class="mtag">'+esc(a)+'</span>').join('');
+  const newH=p.recent?'<span class="mtag mtag-new">עדכני ✨</span>':'';
+  const openH=p.link?'<a href="'+esc(p.link)+'" target="_blank" class="cbt cbt-p">📄 פתח</a>'
+    :'<span class="cbt cbt-off">ללא קישור</span>';
+  const starH='<button class="cbt cbt-s" onclick="toggleSave(\''+ea(p.title)+'\',this)">'+(isSaved(p.title)?'★':'☆')+' שמור</button>';
+  return '<div class="gcard'+(feat?' feat':'')+'"><div class="gc-head '+c.hd+'"><div class="gc-title">'+titleH+'</div>'
+    +(p.recent?'<span class="gc-badge">עדכני</span>':'<span class="gc-badge">'+esc(p.topic)+'</span>')+'</div>'
+    +imgH+stepsH+'<div class="gc-meta">'+audH+newH+'<span class="mtag">'+esc(p.sub||p.topic)+'</span></div>'
+    +'<div class="gc-acts">'+openH+starH+'</div></div>';
+}
+
+function renderRel(p){
+  const c=cfg(p.topic), isRes=RES_FILTER(p);
+  return '<div class="rel-c"'+(p.link?' onclick="window.open(\''+ea(p.link)+'\',\'_blank\')"':'')+
+    '>'+(isRes?'<span style="font-size:7px;background:#edf3fa;color:#2a4a6a;padding:1px 4px;border-radius:4px;display:inline-block;margin-bottom:2px">🎨 חומר</span>':'')+
+    '<div class="rel-cat">'+c.ico+' '+esc(p.topic)+'</div>'+
+    '<div class="rel-title">'+esc(p.title)+(p.recent&&!isRes?' <span style="color:#2a7a42;font-size:7px">✅</span>':'')+'</div>'+
+    (p.link?'<div class="rel-open">פתח ←</div>':'')+'</div>';
+}
+
+// ===== EMERGENCY =====
+function renderEmRes(q){
+  const el=document.getElementById('em-res');
+  if(!q||q.length<2){el.innerHTML='<div class="empty"><div class="empty-ico">⚡</div><div class="empty-txt">כתבי מה קורה<br>ואני מקפיצה לך את הצעד הבא</div></div>';return}
+  const MIN=2;
+  const sg=dedup(getGuides()).map(p=>({...p,_s:scoreP(p,q)})).filter(p=>p._s>=MIN);
+  const sr=dedup(getResources()).map(p=>({...p,_s:scoreP(p,q)})).filter(p=>p._s>=MIN);
+  const p1=sg.filter(p=>p.recent==1).sort((a,b)=>b._s-a._s);
+  const p2=sg.filter(p=>!p.recent||p.recent<1).sort((a,b)=>b._s-a._s);
+  const p3=sr.sort((a,b)=>b._s-a._s);
+  if(!p1.length&&!p2.length&&!p3.length){el.innerHTML='<div class="empty"><div class="empty-ico">😕</div><div class="empty-txt">לא נמצאו תוצאות<br>נסי מילים אחרות</div></div>';return}
+  const featured=p1[0]||p2[0];
+  const relGuides=(featured===p1[0]?[...p1.slice(1),...p2]:[...p2.slice(1)]).slice(0,6);
+  const relRes=p3.slice(0,4);
+  let out='<div class="r-lbl">'+(featured&&featured.recent==1?'✅ עדכני — ':'📄 ')+'הכי מתאים</div>'+renderCard(featured,true,q);
+  if(relGuides.length)out+='<div class="r-lbl" style="margin-top:8px">📋 תדריכים קשורים ('+relGuides.length+')</div><div class="rel-grid">'+relGuides.map(renderRel).join('')+'</div>';
+  if(relRes.length)out+='<div class="r-lbl" style="margin-top:8px">🎨 חומרים ופרויקטים ('+relRes.length+')</div><div class="rel-grid">'+relRes.map(renderRel).join('')+'</div>';
+  el.innerHTML=out;
+}
+document.getElementById('h-srch').addEventListener('input',function(){if(this.value.length>=2){document.getElementById('em-srch').value=this.value;goTab('emergency');renderEmRes(this.value)}});
+document.getElementById('em-srch').addEventListener('input',function(){renderEmRes(this.value)});
+
+// ===== TOPICS =====
+function renderTopics(){
+  const el=document.getElementById('tp-list');
+  const guides=dedup(getGuides()).filter(p=>
+    (!audFilter||(p.audience||[]).some(a=>a.includes(audFilter)))&&
+    (!tpQuery||scoreP(p,tpQuery)>0||p.title.includes(tpQuery))
+  );
+  const grouped={};
+  guides.forEach(p=>{if(!grouped[p.topic])grouped[p.topic]={};const s=p.sub||'כללי';if(!grouped[p.topic][s])grouped[p.topic][s]=[];grouped[p.topic][s].push(p)});
+  const ordered=[...PRIORITY_TOPICS.filter(t=>grouped[t]),...Object.keys(grouped).filter(t=>!PRIORITY_TOPICS.includes(t)&&grouped[t])];
+  if(!ordered.length){el.innerHTML='<div style="text-align:center;padding:30px;color:#bbb;font-size:12px">לא נמצאו תדריכים</div>';return}
+  el.innerHTML=ordered.map(topic=>{
+    const c=cfg(topic), subs=grouped[topic];
+    const total=Object.values(subs).reduce((n,a)=>n+a.length,0);
+    const body=Object.entries(subs).map(([sub,gs])=>
+      (sub&&sub!=='כללי'?'<div class="sub-t">'+esc(sub)+'</div>':'')+
+      gs.map(p=>{
+        const audT=(p.audience||[]).map(a=>'<span class="at">'+esc(a)+'</span>').join('');
+        const openB=p.link?'<a href="'+esc(p.link)+'" target="_blank" class="open-btn">פתח</a>'
+          :'<span class="open-btn nl">ללא קישור</span>';
+        return '<div class="g-row"><div class="g-info"><div class="g-title">'+esc(p.title)+(p.recent?' <span class="nbadge">חדש</span>':'')+'</div><div class="g-aud">'+audT+'</div></div>'+openB+'</div>';
+      }).join('')).join('');
+    return '<div class="acc '+c.acc+'" data-topic="'+esc(topic)+'">'
+      +'<button class="acc-hd" onclick="this.parentElement.classList.toggle(\'open\')">'
+      +'<div class="acc-left"><span class="acc-ico">'+c.ico+'</span><span class="acc-title">'+esc(topic)+'</span><span class="acc-cnt">'+total+'</span></div>'
+      +'<span class="acc-arrow">▼</span></button>'
+      +'<div class="acc-body">'+body+'</div></div>';
+  }).join('');
+}
+function renderAudChips(){
+  const chips=['יועצת','מחנך/ת','הורה','גננת','צוות','תלמיד'];
+  document.getElementById('aud-chips').innerHTML=chips.map(c=>'<button class="aud-c'+(audFilter===c?' on':'')+'" onclick="setAud(\''+c+'\')">'+c+'</button>').join('');
+}
+function setAud(a){audFilter=audFilter===a?null:a;renderAudChips();renderTopics()}
+document.getElementById('tp-srch').addEventListener('input',function(){tpQuery=this.value;renderTopics()});
+
+// ===== STUDIO =====
+function renderStudio(){
+  const el=document.getElementById('st-list');
+  const res=dedup(getResources()).filter(p=>!stQuery||p.title.includes(stQuery)||p.topic.includes(stQuery)||scoreP(p,stQuery)>0);
+  const grouped={};
+  res.forEach(p=>{if(!grouped[p.topic])grouped[p.topic]=[];grouped[p.topic].push(p)});
+  el.innerHTML=Object.entries(grouped).map(([topic,items])=>{
+    const c=cfg(topic);
+    return '<div class="st-acc"><button class="st-acc-hd" onclick="this.parentElement.classList.toggle(\'open\')">'
+      +'<div class="st-acc-left"><span class="acc-ico">'+c.ico+'</span><span class="acc-title">'+esc(topic)+'</span><span class="acc-cnt">'+items.length+'</span></div>'
+      +'<span class="acc-arrow">▼</span></button>'
+      +'<div class="st-acc-body">'+items.map(p=>'<div class="st-card"><div class="st-card-title">'+esc(p.title)+'</div>'
+        +(p.link?'<a href="'+esc(p.link)+'" target="_blank" class="open-btn">פתח</a>':'')+'</div>').join('')
+      +'</div></div>';
+  }).join('');
+}
+document.getElementById('st-srch').addEventListener('input',function(){stQuery=this.value;renderStudio()});
+
+// ===== SAVED =====
+let saved=[];try{saved=JSON.parse(localStorage.getItem('chani_saved')||'[]')}catch(e){}
+const isSaved=t=>saved.includes(t);
+function toggleSave(title,btn){
+  if(isSaved(title)){saved=saved.filter(t=>t!==title);showToast('הוסר מהשמורים')}
+  else{saved.push(title);showToast('נשמר! ⭐')}
+  try{localStorage.setItem('chani_saved',JSON.stringify(saved))}catch(e){}
+  if(btn)btn.textContent=(isSaved(title)?'★':'☆')+' שמור';
+}
+function renderSaved(){
+  const el=document.getElementById('sv-list');
+  if(!saved.length){el.innerHTML='<div class="sv-empty"><div class="sv-ei">⭐</div><div class="sv-et">עדיין לא שמרת תדריכים<br>חפשי ולחצי ☆ לשמירה</div></div>';return}
+  const items=dedup(getGuides()).filter(p=>saved.includes(p.title));
+  el.innerHTML=items.length?items.map(p=>renderCard(p,false,'')).join('')
+    :'<div class="sv-empty"><div class="sv-ei">🤔</div><div class="sv-et">לא נמצאו השמורים</div></div>';
+}
+
+// ===== SHARE / TOAST =====
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
+
+// ===== CLOCK =====
+function tick(){document.getElementById('clk').textContent=new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}
+tick();setInterval(tick,15000);
+
+// ===== INIT =====
+goTab('home');
+renderTiles();
+renderAudChips();
+</script>
+</body>
+</html>
